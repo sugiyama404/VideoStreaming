@@ -13,7 +13,7 @@ services:
       - S3_BUCKET=movie
       - S3_PATH_IMG=image
       - S3_PATH_MOVIE=movie
-    command: sh -c "sleep 3 && go mod tidy && go run cmd/main.go"
+    # command: sh -c "sleep 3 && go mod tidy && go run cmd/main.go"
     tty: true
     volumes:
       - ./apserver/app:/app
