@@ -11,19 +11,22 @@ export const options: NextAuthOptions = {
                 username: {
                     label: "Username:",
                     type: "text",
-                    placeholder: "your-cool-username"
+                    placeholder: "your-username"
                 },
                 password: {
                     label: "Password:",
                     type: "password",
-                    placeholder: "your-awesome-password"
+                    placeholder: "your-password"
                 }
             },
             async authorize(credentials) {
                 const users = [{ id: "42", name: "Dave", password: "nextauth", role: "admin" },
                 { id: "41", name: "mike", password: "pass", role: "guest" }]
-                const user = users.find(user => user.name === credentials?.name);
+                console.log(credentials);
+
+                const user = users.find(user => user.name === credentials?.username);
                 if (credentials?.username === user?.name && credentials?.password === user?.password) {
+                    console.log(user);
                     return user
                 } else {
                     return null

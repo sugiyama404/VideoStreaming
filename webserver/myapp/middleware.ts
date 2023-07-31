@@ -11,7 +11,7 @@ export default withAuth(
         if (request.nextUrl.pathname.startsWith("/administrator")
             && request.nextauth.token?.role !== "admin") {
             return NextResponse.rewrite(
-                new URL("/logout", request.url)
+                new URL("/user/logout", request.url)
             )
         }
     },
@@ -22,4 +22,6 @@ export default withAuth(
     }
 )
 
-export const config = { matcher: ["/extra", "/client", "/dashboard"] }
+export const config = {
+    matcher: ["/administrator", "/guest"]
+}
