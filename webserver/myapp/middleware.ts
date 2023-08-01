@@ -11,7 +11,7 @@ export default withAuth(
         if (request.nextUrl.pathname.startsWith("/administrator")
             && request.nextauth.token?.role !== "admin") {
             return NextResponse.rewrite(
-                new URL("/user/logout", request.url)
+                new URL("/", request.url)
             )
         }
     },

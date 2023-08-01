@@ -109,4 +109,6 @@ sketch
 
 memo.txt
 
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,nextjs,react,go
