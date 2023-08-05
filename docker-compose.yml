@@ -27,6 +27,8 @@ services:
     tty: true
     working_dir: /app/myapp
     command: npm run dev
+    env_file:
+      - ./webserver/docker_secret.env
     volumes:
       - ./webserver/myapp:/app/myapp
       - /app/myapp/node_modules
@@ -44,8 +46,6 @@ services:
       MYSQL_PASSWORD: goMySql1
       TZ: 'Asia/Tokyo'
     command: mysqld
-    env_file:
-      - ./webserver/docker_secret.env
     volumes:
       - ./dbserver/conf/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
