@@ -506,7 +506,7 @@ proto.user.UserInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    roll: jspb.Message.getFieldWithDefault(msg, 3, "")
+    role: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -553,7 +553,7 @@ proto.user.UserInfo.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setRoll(value);
+      msg.setRole(value);
       break;
     default:
       reader.skipField();
@@ -598,7 +598,7 @@ proto.user.UserInfo.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getRoll();
+  f = message.getRole();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -645,10 +645,10 @@ proto.user.UserInfo.prototype.setEmail = function(value) {
 
 
 /**
- * optional string roll = 3;
+ * optional string role = 3;
  * @return {string}
  */
-proto.user.UserInfo.prototype.getRoll = function() {
+proto.user.UserInfo.prototype.getRole = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -657,7 +657,7 @@ proto.user.UserInfo.prototype.getRoll = function() {
  * @param {string} value
  * @return {!proto.user.UserInfo} returns this
  */
-proto.user.UserInfo.prototype.setRoll = function(value) {
+proto.user.UserInfo.prototype.setRole = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -696,7 +696,7 @@ proto.user.RegisterRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    roll: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    role: jspb.Message.getFieldWithDefault(msg, 3, ""),
     password: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
@@ -744,7 +744,7 @@ proto.user.RegisterRequest.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setRoll(value);
+      msg.setRole(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
@@ -793,7 +793,7 @@ proto.user.RegisterRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getRoll();
+  f = message.getRole();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -847,10 +847,10 @@ proto.user.RegisterRequest.prototype.setEmail = function(value) {
 
 
 /**
- * optional string roll = 3;
+ * optional string role = 3;
  * @return {string}
  */
-proto.user.RegisterRequest.prototype.getRoll = function() {
+proto.user.RegisterRequest.prototype.getRole = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -859,7 +859,7 @@ proto.user.RegisterRequest.prototype.getRoll = function() {
  * @param {string} value
  * @return {!proto.user.RegisterRequest} returns this
  */
-proto.user.RegisterRequest.prototype.setRoll = function(value) {
+proto.user.RegisterRequest.prototype.setRole = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 

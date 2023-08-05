@@ -1,5 +1,5 @@
 //@ts-ignore
-import { options } from './../auth/[...nextauth]/options'
+import { options } from '../../auth/[...nextauth]/options'
 //@ts-ignore
 import { NextResponse } from 'next/server';
 //@ts-ignore

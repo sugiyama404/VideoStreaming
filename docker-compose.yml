@@ -6,6 +6,7 @@ services:
       target: development
     container_name: "grpc_todo"
     environment:
+      - ADMIN_EMAIL=adminkanri@gmail.jp
       - S3_ACCESS_KEY=yGKhp2ABvTvYPEy0BL7l
       - S3_SECRET_KEY=5O749nGs6Yz7nS4MxNT3WX7X3rGLIZu54wwMZTjw
       - S3_ENDPOINT=http://minio:9000
