@@ -28,9 +28,23 @@ func (r *UserRepository) FindByEmail(email string) (model.User, error) {
 	err := r.Conn.Where("email = ?", email).First(&user).Error
 	return user, err
 }
+
+func (r *UserRepository) IsEmailAndFirstOrCreate(form form.UserForm) (bool, error) {
+	user := model.User{Name: form.Name, Email: form.Email,
+		Password: form.Password, Role: form.Role}
+	var flag bool
+	result := r.Conn.FirstOrCreate(&user, model.User{Email: form.Email})
+	if result.RowsAffected == 0 {
+		flag = false
+	} else if result.RowsAffected == 1 {
+		flag = true
+	}
+	return flag, result.Error
+}
+
 func (r *UserRepository) Save(form form.UserForm) (model.User, error) {
 	user := model.User{Name: form.Name, Email: form.Email,
-		Password: form.Password, Roll: form.Roll}
+		Password: form.Password, Role: form.Role}
 	err := r.Conn.Create(&user).Error
 	return user, err
 }
@@ -38,7 +52,7 @@ func (r *UserRepository) Save(form form.UserForm) (model.User, error) {
 func (r *UserRepository) UpdateById(id int, form form.UserForm) (model.User, error) {
 	todo := model.User{ID: id}
 	err := r.Conn.Model(&todo).Updates(model.User{Name: form.Name, Email: form.Email,
-		Password: form.Password, Roll: form.Roll}).Error
+		Password: form.Password, Role: form.Role}).Error
 	return todo, err
 }
 

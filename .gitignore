@@ -107,6 +107,8 @@ psd
 thumb
 sketch
 
+apserver/docker_secret.env
+webserver/docker_secret.env
 memo.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,nextjs,react,go

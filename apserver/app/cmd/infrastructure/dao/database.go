@@ -6,12 +6,14 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
+	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func InitDB(db *gorm.DB) {
 	autoMigration(db)
+	checkAdminAccount(db)
 }
 
 func ConnectDB() *gorm.DB {
@@ -29,4 +31,25 @@ func ConnectDB() *gorm.DB {
 
 func autoMigration(db *gorm.DB) {
 	db.AutoMigrate(&model.User{})
+}
+
+func checkAdminAccount(db *gorm.DB) {
+	admin_email := os.Getenv("ADMIN_EMAIL")
+	password, _ := PasswordToHash("adminkanri")
+	user := model.User{
+		Name:     "admin",
+		Password: password,
+		Email:    admin_email,
+		Role:     "admin",
+	}
+	db.FirstOrCreate(&user)
+}
+
+// private functions
+func PasswordToHash(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), err
 }

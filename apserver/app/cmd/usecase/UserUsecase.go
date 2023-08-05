@@ -14,6 +14,10 @@ func (u *UserUseCase) AuthUser(Email string) (model.User, error) {
 	return u.Repository.FindByEmail(Email)
 }
 
+func (u *UserUseCase) CheckExitEmailAddressAndCreateUser(form form.UserForm) (bool, error) {
+	return u.Repository.IsEmailAndFirstOrCreate(form)
+}
+
 func (u *UserUseCase) GetAll() ([]model.User, error) {
 	return u.Repository.FindAll()
 }

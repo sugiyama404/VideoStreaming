@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "./pb/user";
-
 service Profile {
     rpc AuthUser (AuthUserRequest) returns (AuthUserReply) {}
     rpc RegisterUser (RegisterRequest) returns (Message) {}
