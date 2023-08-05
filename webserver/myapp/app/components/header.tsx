@@ -16,7 +16,7 @@ export const Header = () => {
         <header>
             <nav className="uk-navbar-container">
                 <div className="uk-container">
-                    <div uk-navbar="mode: click">
+                    <div uk-navbar="mode: click" className="uk-navbar">
                         <div className="uk-navbar-left">
                             <ul className="uk-navbar-nav">
                                 <li className="uk-active">

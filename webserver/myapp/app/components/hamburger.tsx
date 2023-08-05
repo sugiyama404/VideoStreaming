@@ -20,8 +20,8 @@ export const ClientHamburger = () => {
     if (session) {
         return (
             <li>
-                <Link href="#">Logout</Link>
-                <div className="uk-navbar-dropdown">
+                <Link href="#" role="button" aria-haspopup="true">Logout</Link>
+                <div className="uk-navbar-dropdown uk-drop">
                     <ul className="uk-nav uk-navbar-dropdown-nav">
                         <li className="uk-active" onClick={() => signOut()}>Sign Out</li>
                     </ul>
@@ -31,11 +31,11 @@ export const ClientHamburger = () => {
     } else {
         return (
             <li>
-                <Link href="#">Sign In/Sign Up</Link>
-                <div className="uk-navbar-dropdown">
+                <Link href="#" role="button" aria-haspopup="true">Sign In/Sign Up</Link>
+                <div className="uk-navbar-dropdown uk-drop">
                     <ul className="uk-nav uk-navbar-dropdown-nav">
                         <li className="uk-active" onClick={() => signIn()}>Sign In</li>
-                        <li className="uk-active">Registory</li>
+                        <li className="uk-active"><Link href="/user/registory">Registory</Link></li>
                     </ul>
                 </div>
             </li>

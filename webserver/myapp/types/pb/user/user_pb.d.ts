@@ -60,8 +60,8 @@ export class UserInfo extends jspb.Message {
     setName(value: string): UserInfo;
     getEmail(): string;
     setEmail(value: string): UserInfo;
-    getRoll(): string;
-    setRoll(value: string): UserInfo;
+    getRole(): string;
+    setRole(value: string): UserInfo;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UserInfo.AsObject;
@@ -77,7 +77,7 @@ export namespace UserInfo {
     export type AsObject = {
         name: string,
         email: string,
-        roll: string,
+        role: string,
     }
 }
 
@@ -86,8 +86,8 @@ export class RegisterRequest extends jspb.Message {
     setName(value: string): RegisterRequest;
     getEmail(): string;
     setEmail(value: string): RegisterRequest;
-    getRoll(): string;
-    setRoll(value: string): RegisterRequest;
+    getRole(): string;
+    setRole(value: string): RegisterRequest;
     getPassword(): string;
     setPassword(value: string): RegisterRequest;
 
@@ -105,7 +105,7 @@ export namespace RegisterRequest {
     export type AsObject = {
         name: string,
         email: string,
-        roll: string,
+        role: string,
         password: string,
     }
 }

@@ -41,21 +41,25 @@ func (u *UserServer) AuthUser(ctx context.Context, in *pb.AuthUserRequest) (*pb.
 	if err != nil {
 		return &pb.AuthUserReply{Isuser: false}, nil
 	}
-	userinfo := pb.UserInfo{Name: user.Name, Email: user.Email, Roll: user.Roll}
+	userinfo := pb.UserInfo{Name: user.Name, Email: user.Email, Role: user.Role}
 	return &pb.AuthUserReply{Isuser: true, Info: &userinfo}, nil
 }
 
 func (u *UserServer) RegisterUser(ctx context.Context, in *pb.RegisterRequest) (*pb.Message, error) {
 	stringPassword, err := PasswordToHash(in.Password)
 	if err != nil {
-		return &pb.Message{Message: "error"}, nil
+		return &pb.Message{Message: err.Error()}, nil
 	}
 
-	form := form.UserForm{Name: in.Name, Email: in.Email, Password: stringPassword, Roll: in.Roll}
-	_, err = u.Interactor.Create(form)
+	form := form.UserForm{Name: in.Name, Email: in.Email, Password: stringPassword, Role: in.Role}
+	flag, err := u.Interactor.CheckExitEmailAddressAndCreateUser(form)
 	if err != nil {
-		return &pb.Message{Message: "error"}, nil
+		return &pb.Message{Message: err.Error()}, nil
 	}
+	if !flag {
+		return &pb.Message{Message: "already exists"}, nil
+	}
+
 	return &pb.Message{Message: "success"}, nil
 }
 
