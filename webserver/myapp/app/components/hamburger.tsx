@@ -35,7 +35,7 @@ export const ClientHamburger = () => {
                 <div className="uk-navbar-dropdown uk-drop">
                     <ul className="uk-nav uk-navbar-dropdown-nav">
                         <li className="uk-active" onClick={() => signIn()}>Sign In</li>
-                        <li className="uk-active"><Link href="/user/registory">Registory</Link></li>
+                        <li className="uk-active"><Link href="/user/registory">Sign Up</Link></li>
                     </ul>
                 </div>
             </li>
