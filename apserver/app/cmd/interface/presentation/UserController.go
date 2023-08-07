@@ -6,6 +6,7 @@ import (
 	"app/cmd/interface/repository"
 	"app/cmd/usecase"
 	"context"
+	"fmt"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -28,17 +29,15 @@ func InteractorUser(conn *gorm.DB) *UserServer {
 }
 
 func (u *UserServer) AuthUser(ctx context.Context, in *pb.AuthUserRequest) (*pb.AuthUserReply, error) {
-	user, err := u.Interactor.AuthUser(in.Email)
+	user, err := u.Interactor.AuthUser(in.GetEmail())
 	if err != nil {
+		fmt.Println(err)
 		return &pb.AuthUserReply{Isuser: false}, nil
 	}
 
-	inhash, err := PasswordToHash(in.Password)
+	err = HashCompare(user.Password, in.GetPassword())
 	if err != nil {
-		return &pb.AuthUserReply{Isuser: false}, nil
-	}
-	err = HashCompare(user.Password, inhash)
-	if err != nil {
+		fmt.Println(err)
 		return &pb.AuthUserReply{Isuser: false}, nil
 	}
 	userinfo := pb.UserInfo{Name: user.Name, Email: user.Email, Role: user.Role}
@@ -46,7 +45,7 @@ func (u *UserServer) AuthUser(ctx context.Context, in *pb.AuthUserRequest) (*pb.
 }
 
 func (u *UserServer) RegisterUser(ctx context.Context, in *pb.RegisterRequest) (*pb.Message, error) {
-	stringPassword, err := PasswordToHash(in.Password)
+	stringPassword, err := PasswordToHash(in.GetPassword())
 	if err != nil {
 		return &pb.Message{Message: err.Error()}, nil
 	}
