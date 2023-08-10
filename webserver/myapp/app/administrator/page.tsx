@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main>
+    <div>
       <h1>administrator</h1>
-    </main>
+    </div>
   )
 }

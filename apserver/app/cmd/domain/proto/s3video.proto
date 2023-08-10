@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package s3video;
+
+option go_package = "./pb/s3video";
+
+service Videotransporter {
+    // rpc MovieUpload (stream MovieUpoadRequest) returns (Message) {}
+    // rpc MovieStreamDownload (MovieStreamDownloadRequest) returns (MovieStreamDownloadResponse) {}
+    rpc VideoUpload (stream VideoUpoadRequest) returns (Message) {}
+    rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
+}
+
+message VideoUpoadRequest {
+    bytes movie = 1;
+    string name = 2;
+}
+
+message Message {
+    string message = 1;
+}
+
+message VideoDownloadRequest {
+    string name = 1;
+    int64 startbytes = 2;
+    int64 endbytes = 3;
+}
+
+message VideoDownloadReplay {
+    bytes data = 1;
+}
