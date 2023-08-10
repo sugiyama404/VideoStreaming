@@ -20,12 +20,31 @@ function ts-gen-service() {
     "${PROTO_NAME}.proto"
 }
 
+function search_filename() {
+  local cwd="$1"
+  files=()
+  noex_files=()
+
+  while IFS= read -r -d '' file; do
+    files+=("${file##*/}")
+  done < <(find "$cwd" -type f -print0)
+
+  for file in "${files[@]}"; do
+    noex_files+=("${file%.*}")
+  done
+
+  echo "${noex_files[@]}"
+}
+
 function main() {
   local cwd
   cwd="$(cd "$(dirname "$0")/../types/proto" && pwd)"
-  PROTO_NAME="user"
-  ts-gen-service "${cwd}" "${PROTO_NAME}"
-
+  r=$(search_filename "${cwd}")
+  result=($r)
+  for i in "${result[@]}"; do
+    echo "generating ${i}"
+    ts-gen-service "${cwd}" "${i}"
+  done
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
