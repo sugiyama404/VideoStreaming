@@ -3,19 +3,10 @@
 import Link from 'next/link';
 // @ts-ignore
 import { useSession } from "next-auth/react"
-import { Providers } from "./providers"
 //@ts-ignore
 import { signIn, signOut } from "next-auth/react";
 
 export default function Hamburger() {
-    return (
-        <Providers>
-            <ClientHamburger />
-        </Providers>
-    )
-}
-
-export const ClientHamburger = () => {
     const { data: session } = useSession()
     if (session) {
         return (
@@ -41,4 +32,4 @@ export const ClientHamburger = () => {
             </li>
         );
     }
-};
+}
