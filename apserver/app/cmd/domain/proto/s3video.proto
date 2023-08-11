@@ -5,14 +5,12 @@ package s3video;
 option go_package = "./pb/s3video";
 
 service Videotransporter {
-    // rpc MovieUpload (stream MovieUpoadRequest) returns (Message) {}
-    // rpc MovieStreamDownload (MovieStreamDownloadRequest) returns (MovieStreamDownloadResponse) {}
     rpc VideoUpload (stream VideoUpoadRequest) returns (Message) {}
     rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
 }
 
 message VideoUpoadRequest {
-    bytes movie = 1;
+    bytes data = 1;
     string name = 2;
 }
 
