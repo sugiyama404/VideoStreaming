@@ -1,8 +1,10 @@
+import { create } from './actions';
+
 export default function Upload() {
   return (
     <div>
       <h1 className="uk-text-center">動画をアップロード</h1>
-      <form >
+      <form action={create}>
         <div className="uk-margin uk-text-center uk-padding" uk-margin="true">
           <div uk-form-custom="target: true" suppressHydrationWarning={true}>
             <oninput type="file" name="file" />
