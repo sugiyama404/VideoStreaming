@@ -21,12 +21,12 @@ func (u *S3UseCase) ImageDownload(key string) (*bytes.Buffer, error) {
 	return u.Repository.DownloadToS3(keyName)
 }
 
-func (u *S3UseCase) MovieUpload(key string, imageFile *os.File) error {
+func (u *S3UseCase) VideoUpload(key string, imageFile *os.File) error {
 	keyName := createKeyFilePath(false, key)
 	return u.Repository.UploadToS3(imageFile, keyName)
 }
 
-func (u *S3UseCase) MovieDownload(key string) (*bytes.Buffer, error) {
+func (u *S3UseCase) VideoDownload(key string) (*bytes.Buffer, error) {
 	keyName := createKeyFilePath(false, key)
 	fmt.Println("keyName", keyName)
 	return u.Repository.DownloadToS3(keyName)

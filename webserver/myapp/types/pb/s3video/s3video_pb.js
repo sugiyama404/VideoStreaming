@@ -141,7 +141,7 @@ proto.s3video.VideoUpoadRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.s3video.VideoUpoadRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    movie: msg.getMovie_asB64(),
+    data: msg.getData_asB64(),
     name: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
@@ -181,7 +181,7 @@ proto.s3video.VideoUpoadRequest.deserializeBinaryFromReader = function(msg, read
     switch (field) {
     case 1:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setMovie(value);
+      msg.setData(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -216,7 +216,7 @@ proto.s3video.VideoUpoadRequest.prototype.serializeBinary = function() {
  */
 proto.s3video.VideoUpoadRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMovie_asU8();
+  f = message.getData_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       1,
@@ -234,35 +234,35 @@ proto.s3video.VideoUpoadRequest.serializeBinaryToWriter = function(message, writ
 
 
 /**
- * optional bytes movie = 1;
+ * optional bytes data = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.s3video.VideoUpoadRequest.prototype.getMovie = function() {
+proto.s3video.VideoUpoadRequest.prototype.getData = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * optional bytes movie = 1;
- * This is a type-conversion wrapper around `getMovie()`
+ * optional bytes data = 1;
+ * This is a type-conversion wrapper around `getData()`
  * @return {string}
  */
-proto.s3video.VideoUpoadRequest.prototype.getMovie_asB64 = function() {
+proto.s3video.VideoUpoadRequest.prototype.getData_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getMovie()));
+      this.getData()));
 };
 
 
 /**
- * optional bytes movie = 1;
+ * optional bytes data = 1;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getMovie()`
+ * This is a type-conversion wrapper around `getData()`
  * @return {!Uint8Array}
  */
-proto.s3video.VideoUpoadRequest.prototype.getMovie_asU8 = function() {
+proto.s3video.VideoUpoadRequest.prototype.getData_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getMovie()));
+      this.getData()));
 };
 
 
@@ -270,7 +270,7 @@ proto.s3video.VideoUpoadRequest.prototype.getMovie_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.s3video.VideoUpoadRequest} returns this
  */
-proto.s3video.VideoUpoadRequest.prototype.setMovie = function(value) {
+proto.s3video.VideoUpoadRequest.prototype.setData = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 

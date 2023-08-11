@@ -20,5 +20,4 @@ func main() {
 	}
 	dao.NewS3Bucket(s3)
 	driver.Init(lis, conn, s3)
-
 }

@@ -8,7 +8,7 @@ service Videotransporter {
 }
 
 message VideoUpoadRequest {
-    bytes movie = 1;
+    bytes data = 1;
     string name = 2;
 }
 

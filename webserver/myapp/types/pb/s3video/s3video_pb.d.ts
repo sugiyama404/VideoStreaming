@@ -7,10 +7,10 @@
 import * as jspb from "google-protobuf";
 
 export class VideoUpoadRequest extends jspb.Message { 
-    getMovie(): Uint8Array | string;
-    getMovie_asU8(): Uint8Array;
-    getMovie_asB64(): string;
-    setMovie(value: Uint8Array | string): VideoUpoadRequest;
+    getData(): Uint8Array | string;
+    getData_asU8(): Uint8Array;
+    getData_asB64(): string;
+    setData(value: Uint8Array | string): VideoUpoadRequest;
     getName(): string;
     setName(value: string): VideoUpoadRequest;
 
@@ -26,7 +26,7 @@ export class VideoUpoadRequest extends jspb.Message {
 
 export namespace VideoUpoadRequest {
     export type AsObject = {
-        movie: Uint8Array | string,
+        data: Uint8Array | string,
         name: string,
     }
 }
