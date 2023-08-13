@@ -4,17 +4,6 @@
 var grpc = require('@grpc/grpc-js');
 var s3video_pb = require('./s3video_pb.js');
 
-function serialize_s3video_Message(arg) {
-  if (!(arg instanceof s3video_pb.Message)) {
-    throw new Error('Expected argument of type s3video.Message');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_s3video_Message(buffer_arg) {
-  return s3video_pb.Message.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_s3video_VideoDownloadReplay(arg) {
   if (!(arg instanceof s3video_pb.VideoDownloadReplay)) {
     throw new Error('Expected argument of type s3video.VideoDownloadReplay');
@@ -37,6 +26,17 @@ function deserialize_s3video_VideoDownloadRequest(buffer_arg) {
   return s3video_pb.VideoDownloadRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_s3video_VideoUploadReplay(arg) {
+  if (!(arg instanceof s3video_pb.VideoUploadReplay)) {
+    throw new Error('Expected argument of type s3video.VideoUploadReplay');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_VideoUploadReplay(buffer_arg) {
+  return s3video_pb.VideoUploadReplay.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_s3video_VideoUpoadRequest(arg) {
   if (!(arg instanceof s3video_pb.VideoUpoadRequest)) {
     throw new Error('Expected argument of type s3video.VideoUpoadRequest');
@@ -55,11 +55,11 @@ var VideotransporterService = exports.VideotransporterService = {
     requestStream: true,
     responseStream: false,
     requestType: s3video_pb.VideoUpoadRequest,
-    responseType: s3video_pb.Message,
+    responseType: s3video_pb.VideoUploadReplay,
     requestSerialize: serialize_s3video_VideoUpoadRequest,
     requestDeserialize: deserialize_s3video_VideoUpoadRequest,
-    responseSerialize: serialize_s3video_Message,
-    responseDeserialize: deserialize_s3video_Message,
+    responseSerialize: serialize_s3video_VideoUploadReplay,
+    responseDeserialize: deserialize_s3video_VideoUploadReplay,
   },
   videoDownload: {
     path: '/s3video.Videotransporter/VideoDownload',
