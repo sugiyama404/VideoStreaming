@@ -45,7 +45,7 @@ func (c *videotransporterClient) VideoUpload(ctx context.Context, opts ...grpc.C
 
 type Videotransporter_VideoUploadClient interface {
 	Send(*VideoUpoadRequest) error
-	CloseAndRecv() (*Message, error)
+	CloseAndRecv() (*VideoUploadReplay, error)
 	grpc.ClientStream
 }
 
@@ -57,11 +57,11 @@ func (x *videotransporterVideoUploadClient) Send(m *VideoUpoadRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *videotransporterVideoUploadClient) CloseAndRecv() (*Message, error) {
+func (x *videotransporterVideoUploadClient) CloseAndRecv() (*VideoUploadReplay, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(Message)
+	m := new(VideoUploadReplay)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func _Videotransporter_VideoUpload_Handler(srv interface{}, stream grpc.ServerSt
 }
 
 type Videotransporter_VideoUploadServer interface {
-	SendAndClose(*Message) error
+	SendAndClose(*VideoUploadReplay) error
 	Recv() (*VideoUpoadRequest, error)
 	grpc.ServerStream
 }
@@ -123,7 +123,7 @@ type videotransporterVideoUploadServer struct {
 	grpc.ServerStream
 }
 
-func (x *videotransporterVideoUploadServer) SendAndClose(m *Message) error {
+func (x *videotransporterVideoUploadServer) SendAndClose(m *VideoUploadReplay) error {
 	return x.ServerStream.SendMsg(m)
 }
 

@@ -3,7 +3,7 @@ syntax = "proto3";
 package s3video;
 
 service Videotransporter {
-    rpc VideoUpload (stream VideoUpoadRequest) returns (Message) {}
+    rpc VideoUpload (stream VideoUpoadRequest) returns (VideoUploadReplay) {}
     rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
 }
 
@@ -13,8 +13,8 @@ message VideoUpoadRequest {
     int64 id = 3;
 }
 
-message Message {
-    string message = 1;
+message VideoUploadReplay {
+    string newname = 1;
 }
 
 message VideoDownloadRequest {

@@ -30,12 +30,16 @@ func InteractorS3Video(conn *s3.S3) *S3VideoServer {
 func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer) error {
 	fmt.Println("VideoUpload")
 	filename := ""
+	userid := 0
 	var imagedata []byte
 
 	for {
 		req, err := stream.Recv()
 		if req.GetName() != "" {
 			filename = req.GetName()
+		}
+		if req.GetId() != 0 {
+			userid = int(req.GetId())
 		}
 		if req.GetData() != nil {
 			imagedata = append(imagedata, req.GetData()...)
@@ -49,6 +53,8 @@ func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer
 			return err
 		}
 	}
+
+	fmt.Println(userid)
 
 	f, err := os.Create("/tmp/" + filename)
 	if err != nil {
@@ -68,7 +74,8 @@ func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer
 		return err
 	}
 	os.Remove("/tmp/" + filename)
-	return stream.SendAndClose(&pb.Message{Message: "success!!!"})
+	// return stream.SendAndClose(&pb.Message{Message: "success!!!"})
+	return stream.SendAndClose(&pb.VideoUploadReplay{Newname: "success!!!"})
 }
 
 func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
