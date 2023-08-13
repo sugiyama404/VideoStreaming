@@ -31,7 +31,7 @@ export const options: NextAuthOptions = {
                     return null
                 } else {
                     const userinfo = res.getInfo() as UserInfo;
-                    const user = { name: userinfo.getName(), email: userinfo.getEmail(), role: userinfo.getRole() }
+                    const user = { id: userinfo.getId().toString(), name: userinfo.getName(), email: userinfo.getEmail(), role: userinfo.getRole() }
                     return user
                 }
             }
@@ -43,11 +43,17 @@ export const options: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
-            if (user) token.role = user.role
+            if (user) {
+                token.id = user.id
+                token.role = user.role
+            }
             return token
         },
         async session({ session, token }) {
-            if (session?.user) session.user.role = token.role
+            if (session?.user) {
+                session.user.role = token.role
+                session.user.id = token.id
+            }
             return session
         },
     }

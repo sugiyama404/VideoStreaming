@@ -13,6 +13,8 @@ export class VideoUpoadRequest extends jspb.Message {
     setData(value: Uint8Array | string): VideoUpoadRequest;
     getName(): string;
     setName(value: string): VideoUpoadRequest;
+    getId(): number;
+    setId(value: number): VideoUpoadRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): VideoUpoadRequest.AsObject;
@@ -28,6 +30,7 @@ export namespace VideoUpoadRequest {
     export type AsObject = {
         data: Uint8Array | string,
         name: string,
+        id: number,
     }
 }
 

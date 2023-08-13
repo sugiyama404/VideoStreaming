@@ -22,8 +22,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VideotransporterClient interface {
-	// rpc MovieUpload (stream MovieUpoadRequest) returns (Message) {}
-	// rpc MovieStreamDownload (MovieStreamDownloadRequest) returns (MovieStreamDownloadResponse) {}
 	VideoUpload(ctx context.Context, opts ...grpc.CallOption) (Videotransporter_VideoUploadClient, error)
 	VideoDownload(ctx context.Context, in *VideoDownloadRequest, opts ...grpc.CallOption) (*VideoDownloadReplay, error)
 }
@@ -83,8 +81,6 @@ func (c *videotransporterClient) VideoDownload(ctx context.Context, in *VideoDow
 // All implementations must embed UnimplementedVideotransporterServer
 // for forward compatibility
 type VideotransporterServer interface {
-	// rpc MovieUpload (stream MovieUpoadRequest) returns (Message) {}
-	// rpc MovieStreamDownload (MovieStreamDownloadRequest) returns (MovieStreamDownloadResponse) {}
 	VideoUpload(Videotransporter_VideoUploadServer) error
 	VideoDownload(context.Context, *VideoDownloadRequest) (*VideoDownloadReplay, error)
 	mustEmbedUnimplementedVideotransporterServer()

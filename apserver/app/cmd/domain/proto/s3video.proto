@@ -12,6 +12,7 @@ service Videotransporter {
 message VideoUpoadRequest {
     bytes data = 1;
     string name = 2;
+    int64 id = 3;
 }
 
 message Message {
