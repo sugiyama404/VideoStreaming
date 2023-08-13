@@ -142,7 +142,8 @@ proto.s3video.VideoUpoadRequest.prototype.toObject = function(opt_includeInstanc
 proto.s3video.VideoUpoadRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     data: msg.getData_asB64(),
-    name: jspb.Message.getFieldWithDefault(msg, 2, "")
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -187,6 +188,10 @@ proto.s3video.VideoUpoadRequest.deserializeBinaryFromReader = function(msg, read
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -227,6 +232,13 @@ proto.s3video.VideoUpoadRequest.serializeBinaryToWriter = function(message, writ
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getId();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
       f
     );
   }
@@ -290,6 +302,24 @@ proto.s3video.VideoUpoadRequest.prototype.getName = function() {
  */
 proto.s3video.VideoUpoadRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional int64 id = 3;
+ * @return {number}
+ */
+proto.s3video.VideoUpoadRequest.prototype.getId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.s3video.VideoUpoadRequest} returns this
+ */
+proto.s3video.VideoUpoadRequest.prototype.setId = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 

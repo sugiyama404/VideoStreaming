@@ -40,7 +40,7 @@ func (u *UserServer) AuthUser(ctx context.Context, in *pb.AuthUserRequest) (*pb.
 		fmt.Println(err)
 		return &pb.AuthUserReply{Isuser: false}, nil
 	}
-	userinfo := pb.UserInfo{Name: user.Name, Email: user.Email, Role: user.Role}
+	userinfo := pb.UserInfo{Id: int64(user.ID), Name: user.Name, Email: user.Email, Role: user.Role}
 	return &pb.AuthUserReply{Isuser: true, Info: &userinfo}, nil
 }
 

@@ -37,6 +37,7 @@ function search_filename() {
 }
 
 function main() {
+  npm install -g grpc-tools
   local cwd
   cwd="$(cd "$(dirname "$0")/../types/proto" && pwd)"
   r=$(search_filename "${cwd}")
