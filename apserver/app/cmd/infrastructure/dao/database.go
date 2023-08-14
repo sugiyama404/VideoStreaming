@@ -31,7 +31,7 @@ func ConnectDB() *gorm.DB {
 
 func autoMigration(db *gorm.DB) {
 	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Movie{})
+	db.AutoMigrate(&model.Video{})
 }
 
 func checkAdminAccount(db *gorm.DB) {

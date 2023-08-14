@@ -26,13 +26,13 @@ export async function create(form: FormData) {
             chunks.push(fileAsByteArray.slice(i, i + CHUNK_SIZE));
         }
     }
-    await new Promise((resolve) => {
+    const newname = await new Promise((resolve) => {
         const call = client.videoUpload(function (err: any, res: any) {
             if (err) {
                 resolve(err);
             }
             console.log(res.array[0]);
-            resolve(true);
+            resolve(res.array[0]);
         });
         chunks.forEach((chunk: Uint8Array) => {
             const req = new VideoUpoadRequest();
@@ -44,7 +44,7 @@ export async function create(form: FormData) {
         call.end();
     });
     console.log('uploaded');
-    redirect(`/page11`);
+    redirect(`/administrator/videodetail?name=${newname}`);
 }
 
 async function blobToUint8Array(blob: Blob): Promise<Uint8Array> {
