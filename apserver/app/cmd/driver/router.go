@@ -18,7 +18,7 @@ func Init(lis net.Listener, conn *gorm.DB, s3Client *s3.S3) {
 	s := grpc.NewServer()
 	user_server := presentation.InteractorUser(conn)
 	s3image_server := presentation.InteractorS3Image(s3Client)
-	s3video_server := presentation.InteractorS3Video(s3Client)
+	s3video_server := presentation.InteractorS3Video(s3Client, conn)
 
 	pb_user.RegisterProfileServer(s, user_server)
 	pb_s3image.RegisterImagetransporterServer(s, s3image_server)

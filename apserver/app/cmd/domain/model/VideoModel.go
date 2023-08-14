@@ -6,8 +6,9 @@ import (
 	"github.com/google/uuid"
 )
 
-type Movie struct {
-	ID        uuid.UUID  `gorm:"type:binary(16);default:(UUID_TO_BIN(UUID()));primary_key" json:"id"`
+type Video struct {
+	ID        int        `gorm:"primary_key" json:"id"`
+	UUID      uuid.UUID  `gorm:"type:binary(16);default:(UUID_TO_BIN(UUID()));unique" json:"uuid"`
 	UserID    int        `gorm:"not null" json:"user_id"`
 	FileName  string     `json:"file_name"`
 	Title     string     `json:"title"`
