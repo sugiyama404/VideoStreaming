@@ -26,10 +26,10 @@ export async function create(form: FormData) {
             chunks.push(fileAsByteArray.slice(i, i + CHUNK_SIZE));
         }
     }
-    const newname = await new Promise((resolve) => {
+    const res = await new Promise((resolve, reject) => {
         const call = client.videoUpload(function (err: any, res: any) {
             if (err) {
-                resolve(err);
+                reject(err);
             }
             console.log(res.array[0]);
             resolve(res.array[0]);
@@ -42,8 +42,11 @@ export async function create(form: FormData) {
             call.write(req);
         });
         call.end();
+    }).catch(() => {
+        redirect(`/administrator`);
     });
     console.log('uploaded');
+    const newname = await res as unknown as string;
     redirect(`/administrator/videodetail?name=${newname}`);
 }
 

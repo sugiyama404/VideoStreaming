@@ -6,5 +6,10 @@ export default function Home() {
   const searchParams = useSearchParams()
   const search = searchParams.get('name')
 
-  return <>Search: {search}</>
+  return (
+    <div>
+      <h1>動画詳細</h1>
+      <div>Search: {search}</div>
+    </div>
+  )
 }
