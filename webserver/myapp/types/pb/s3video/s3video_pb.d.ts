@@ -11,8 +11,8 @@ export class VideoUpoadRequest extends jspb.Message {
     getData_asU8(): Uint8Array;
     getData_asB64(): string;
     setData(value: Uint8Array | string): VideoUpoadRequest;
-    getName(): string;
-    setName(value: string): VideoUpoadRequest;
+    getSize(): number;
+    setSize(value: number): VideoUpoadRequest;
     getId(): number;
     setId(value: number): VideoUpoadRequest;
 
@@ -29,7 +29,7 @@ export class VideoUpoadRequest extends jspb.Message {
 export namespace VideoUpoadRequest {
     export type AsObject = {
         data: Uint8Array | string,
-        name: string,
+        size: number,
         id: number,
     }
 }
@@ -51,6 +51,60 @@ export class VideoUploadReplay extends jspb.Message {
 export namespace VideoUploadReplay {
     export type AsObject = {
         newname: string,
+    }
+}
+
+export class VideoDeteilUpoadRequest extends jspb.Message { 
+    getVideoUuid(): string;
+    setVideoUuid(value: string): VideoDeteilUpoadRequest;
+    getTitle(): string;
+    setTitle(value: string): VideoDeteilUpoadRequest;
+    getExplain(): string;
+    setExplain(value: string): VideoDeteilUpoadRequest;
+    clearTagsList(): void;
+    getTagsList(): Array<string>;
+    setTagsList(value: Array<string>): VideoDeteilUpoadRequest;
+    addTags(value: string, index?: number): string;
+    getCategory(): string;
+    setCategory(value: string): VideoDeteilUpoadRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoDeteilUpoadRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoDeteilUpoadRequest): VideoDeteilUpoadRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoDeteilUpoadRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoDeteilUpoadRequest;
+    static deserializeBinaryFromReader(message: VideoDeteilUpoadRequest, reader: jspb.BinaryReader): VideoDeteilUpoadRequest;
+}
+
+export namespace VideoDeteilUpoadRequest {
+    export type AsObject = {
+        videoUuid: string,
+        title: string,
+        explain: string,
+        tagsList: Array<string>,
+        category: string,
+    }
+}
+
+export class Message extends jspb.Message { 
+    getMsg(): string;
+    setMsg(value: string): Message;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Message.AsObject;
+    static toObject(includeInstance: boolean, msg: Message): Message.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Message, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Message;
+    static deserializeBinaryFromReader(message: Message, reader: jspb.BinaryReader): Message;
+}
+
+export namespace Message {
+    export type AsObject = {
+        msg: string,
     }
 }
 

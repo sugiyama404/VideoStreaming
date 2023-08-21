@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"app/cmd/domain/form"
 	pb "app/cmd/domain/pb/s3video"
 	"app/cmd/interface/repository"
 	"app/cmd/usecase"
@@ -8,6 +9,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
+
+	"github.com/google/uuid"
 
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/jinzhu/gorm"
@@ -37,12 +41,16 @@ func InteractorS3Video(cs3 *s3.S3, conn *gorm.DB) *S3VideoServer {
 func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer) error {
 	fmt.Println("VideoUpload")
 	userid := 0
+	filesize := 0
 	var imagedata []byte
 
 	for {
 		req, err := stream.Recv()
 		if req.GetId() != 0 {
 			userid = int(req.GetId())
+		}
+		if req.GetSize() != 0 {
+			filesize = int(req.GetSize())
 		}
 		if req.GetData() != nil {
 			imagedata = append(imagedata, req.GetData()...)
@@ -56,8 +64,9 @@ func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer
 		}
 	}
 
-	fmt.Println(userid)
-	video, err := s.Interactor.CreateByID(userid)
+	fmt.Println("userid: ", userid)
+	fmt.Println("filesize: ", filesize)
+	video, err := s.Interactor.CreateByIDAndSize(userid, filesize)
 	if err != nil {
 		fmt.Println(err)
 		return err
@@ -87,6 +96,31 @@ func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer
 	}
 	os.Remove("/tmp/" + filename)
 	return stream.SendAndClose(&pb.VideoUploadReplay{Newname: uuid_name})
+}
+
+func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDeteilUpoadRequest) (*pb.Message, error) {
+	tags_arr := in.GetTags()
+	tags := strings.Join(tags_arr, ",")
+	uuid, err := uuid.Parse(in.GetVideoUuid())
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	form := form.VideoForm{
+		UUID:     uuid,
+		Title:    in.GetTitle(),
+		Explain:  in.GetExplain(),
+		Tags:     tags,
+		Category: in.GetCategory(),
+	}
+
+	_, err = s.Interactor.Save(form)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.Message{Msg: "ok"}, nil
 }
 
 func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
