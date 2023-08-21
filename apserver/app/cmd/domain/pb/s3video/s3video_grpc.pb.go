@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VideotransporterClient interface {
 	VideoUpload(ctx context.Context, opts ...grpc.CallOption) (Videotransporter_VideoUploadClient, error)
+	VideoDeteilUpload(ctx context.Context, in *VideoDeteilUpoadRequest, opts ...grpc.CallOption) (*Message, error)
 	VideoDownload(ctx context.Context, in *VideoDownloadRequest, opts ...grpc.CallOption) (*VideoDownloadReplay, error)
 }
 
@@ -68,6 +69,15 @@ func (x *videotransporterVideoUploadClient) CloseAndRecv() (*VideoUploadReplay, 
 	return m, nil
 }
 
+func (c *videotransporterClient) VideoDeteilUpload(ctx context.Context, in *VideoDeteilUpoadRequest, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/s3video.Videotransporter/VideoDeteilUpload", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *videotransporterClient) VideoDownload(ctx context.Context, in *VideoDownloadRequest, opts ...grpc.CallOption) (*VideoDownloadReplay, error) {
 	out := new(VideoDownloadReplay)
 	err := c.cc.Invoke(ctx, "/s3video.Videotransporter/VideoDownload", in, out, opts...)
@@ -82,6 +92,7 @@ func (c *videotransporterClient) VideoDownload(ctx context.Context, in *VideoDow
 // for forward compatibility
 type VideotransporterServer interface {
 	VideoUpload(Videotransporter_VideoUploadServer) error
+	VideoDeteilUpload(context.Context, *VideoDeteilUpoadRequest) (*Message, error)
 	VideoDownload(context.Context, *VideoDownloadRequest) (*VideoDownloadReplay, error)
 	mustEmbedUnimplementedVideotransporterServer()
 }
@@ -92,6 +103,9 @@ type UnimplementedVideotransporterServer struct {
 
 func (UnimplementedVideotransporterServer) VideoUpload(Videotransporter_VideoUploadServer) error {
 	return status.Errorf(codes.Unimplemented, "method VideoUpload not implemented")
+}
+func (UnimplementedVideotransporterServer) VideoDeteilUpload(context.Context, *VideoDeteilUpoadRequest) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VideoDeteilUpload not implemented")
 }
 func (UnimplementedVideotransporterServer) VideoDownload(context.Context, *VideoDownloadRequest) (*VideoDownloadReplay, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VideoDownload not implemented")
@@ -135,6 +149,24 @@ func (x *videotransporterVideoUploadServer) Recv() (*VideoUpoadRequest, error) {
 	return m, nil
 }
 
+func _Videotransporter_VideoDeteilUpload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VideoDeteilUpoadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VideotransporterServer).VideoDeteilUpload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/s3video.Videotransporter/VideoDeteilUpload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VideotransporterServer).VideoDeteilUpload(ctx, req.(*VideoDeteilUpoadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Videotransporter_VideoDownload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VideoDownloadRequest)
 	if err := dec(in); err != nil {
@@ -160,6 +192,10 @@ var Videotransporter_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "s3video.Videotransporter",
 	HandlerType: (*VideotransporterServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "VideoDeteilUpload",
+			Handler:    _Videotransporter_VideoDeteilUpload_Handler,
+		},
 		{
 			MethodName: "VideoDownload",
 			Handler:    _Videotransporter_VideoDownload_Handler,

@@ -15,7 +15,7 @@ export async function create(form: FormData) {
     const file = form.get('file') as FormDataEntryValue as File;
     const userid = Number(form.get('id') as FormDataEntryValue as string);
     console.log(userid);
-    const filename = file.name;
+    const filesize = file.size;
     const blob = new Blob([file], { type: file.type })
     const fileAsByteArray = await blobToUint8Array(blob);
     const chunks: Uint8Array[] = [];
@@ -36,7 +36,7 @@ export async function create(form: FormData) {
         });
         chunks.forEach((chunk: Uint8Array) => {
             const req = new VideoUpoadRequest();
-            if (!!filename) req.setName(filename);
+            if (!!filesize) req.setSize(filesize);
             if (!!userid) req.setId(userid);
             if (!!chunk) req.setData(chunk);
             call.write(req);
