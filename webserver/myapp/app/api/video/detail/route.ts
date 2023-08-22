@@ -2,25 +2,32 @@
 import { NextResponse, NextRequest } from 'next/server'
 //@ts-ignore
 import * as grpc from '@grpc/grpc-js';
-import { ProfileClient } from '@/types/pb/user/user_grpc_pb';
-import { RegisterRequest, Message } from '@/types/pb/user/user_pb';
+import { VideotransporterClient } from '@/types/pb/s3video/s3video_grpc_pb';
+import { VideoDeteilUpoadRequest, VideoDeteilUpoadReplay } from '@/types/pb/s3video/s3video_pb';
 //@ts-ignore
 const target: string = process.env.APSERVER_ADDRESS;
 
 export async function POST(request: NextRequest) {
-    const client = new ProfileClient(target, grpc.credentials.createInsecure());
-    const req = new RegisterRequest();
+    const client = new VideotransporterClient(target, grpc.credentials.createInsecure());
+    const req = new VideoDeteilUpoadRequest();
     const req_data = await request.json();
-    const { name, email, password, role } = req_data;
-    if (!!name) req.setName(name);
-    if (!!email) req.setEmail(email);
-    if (!!password) req.setPassword(password);
-    if (!!role) req.setRole(role);
-    const res = await new Promise<Message>((resolve, reject) => {
-        client.registerUser(req, (err, res) => {
+    const {
+        uuid, title, explain, category, tags, extension
+    } = req_data;
+
+    if (!!uuid) { req.setVideoUuid(uuid) }
+    if (!!title) { req.setTitle(title) }
+    if (!!explain) { req.setExplain(explain) }
+    if (!!category) { req.setCategory(category) }
+    if (!!tags) { req.setTagsList(tags) }
+    if (!!extension) { req.setExtension$(extension) }
+    console.log(req);
+
+    const res = await new Promise<VideoDeteilUpoadReplay>((resolve, reject) => {
+        client.videoDeteilUpload(req, (err, res) => {
             if (err) reject(err);
             resolve(res);
         });
     });
-    return NextResponse.json({ message: res.getMessage() })
+    return NextResponse.json({ uuid: res.getUuid })
 }
