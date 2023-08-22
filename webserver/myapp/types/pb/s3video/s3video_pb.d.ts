@@ -67,6 +67,8 @@ export class VideoDeteilUpoadRequest extends jspb.Message {
     addTags(value: string, index?: number): string;
     getCategory(): string;
     setCategory(value: string): VideoDeteilUpoadRequest;
+    getExtension$(): string;
+    setExtension$(value: string): VideoDeteilUpoadRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): VideoDeteilUpoadRequest.AsObject;
@@ -85,26 +87,27 @@ export namespace VideoDeteilUpoadRequest {
         explain: string,
         tagsList: Array<string>,
         category: string,
+        extension: string,
     }
 }
 
-export class Message extends jspb.Message { 
-    getMsg(): string;
-    setMsg(value: string): Message;
+export class VideoDeteilUpoadReplay extends jspb.Message { 
+    getUuid(): string;
+    setUuid(value: string): VideoDeteilUpoadReplay;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Message.AsObject;
-    static toObject(includeInstance: boolean, msg: Message): Message.AsObject;
+    toObject(includeInstance?: boolean): VideoDeteilUpoadReplay.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoDeteilUpoadReplay): VideoDeteilUpoadReplay.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Message, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Message;
-    static deserializeBinaryFromReader(message: Message, reader: jspb.BinaryReader): Message;
+    static serializeBinaryToWriter(message: VideoDeteilUpoadReplay, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoDeteilUpoadReplay;
+    static deserializeBinaryFromReader(message: VideoDeteilUpoadReplay, reader: jspb.BinaryReader): VideoDeteilUpoadReplay;
 }
 
-export namespace Message {
+export namespace VideoDeteilUpoadReplay {
     export type AsObject = {
-        msg: string,
+        uuid: string,
     }
 }
 

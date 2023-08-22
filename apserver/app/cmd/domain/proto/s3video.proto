@@ -6,7 +6,7 @@ option go_package = "./pb/s3video";
 
 service Videotransporter {
     rpc VideoUpload (stream VideoUpoadRequest) returns (VideoUploadReplay) {}
-    rpc VideoDeteilUpload (VideoDeteilUpoadRequest) returns (Message) {}
+    rpc VideoDeteilUpload (VideoDeteilUpoadRequest) returns (VideoDeteilUpoadReplay) {}
     rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
 }
 
@@ -27,10 +27,11 @@ message VideoDeteilUpoadRequest {
     string explain = 3;
     repeated string tags = 4;
     string category = 5;
+    string extension = 6;
 }
 
-message Message {
-    string msg = 1;
+message VideoDeteilUpoadReplay {
+    string uuid = 1;
 }
 
 message VideoDownloadRequest {

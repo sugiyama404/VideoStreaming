@@ -15,7 +15,7 @@ type Video struct {
 	Explain      string     `json:"explain"`
 	Tags         string     `json:"tags"`
 	Category     string     `json:"category"`
-	TbnUuid      string     `json:"tbn_uuid"`
+	TbnUuid      uuid.UUID  `gorm:"type:binary(16);default:(UUID_TO_BIN(UUID()));unique" json:"tbn_uuid"`
 	TbnExtension string     `json:"tbn_extension"`
 	CreatedAt    time.Time  `json:"created_at"`
 	UpdatedAt    time.Time  `json:"updated_at"`
