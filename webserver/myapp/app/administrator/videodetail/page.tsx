@@ -61,8 +61,21 @@ export default function Home() {
     console.log(uuid.uuid)
 
     const tmb_name = uuid.uuid + extension
-
-
+    const tmb_data = {
+      file: file,
+      name: tmb_name,
+    }
+    const tmb_endpoint = '/api/video/upload'
+    const tmb_JSONdata = JSON.stringify(tmb_data)
+    const tmb_options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: tmb_JSONdata,
+    }
+    const tmb_response = await fetch(tmb_endpoint, tmb_options)
+    console.log(tmb_response)
     router.push('/administrator')
 
   }
