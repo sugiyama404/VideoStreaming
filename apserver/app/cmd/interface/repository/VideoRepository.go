@@ -20,10 +20,11 @@ func (m *VideoRepository) SaveByIDAndSize(id int, size int) (model.Video, error)
 func (m *VideoRepository) Update(form form.VideoForm) (model.Video, error) {
 	var video model.Video
 	err := m.Conn.Model(&video).Where("uuid = ?", form.UUID).Updates(model.Video{
-		Title:    form.Title,
-		Explain:  form.Explain,
-		Tags:     form.Tags,
-		Category: form.Category,
+		Title:        form.Title,
+		Explain:      form.Explain,
+		Tags:         form.Tags,
+		Category:     form.Category,
+		TbnExtension: form.TbnExtension,
 	}).Error
 	return video, err
 }

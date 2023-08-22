@@ -98,7 +98,7 @@ func (s *S3VideoServer) VideoUpload(stream pb.Videotransporter_VideoUploadServer
 	return stream.SendAndClose(&pb.VideoUploadReplay{Newname: uuid_name})
 }
 
-func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDeteilUpoadRequest) (*pb.Message, error) {
+func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDeteilUpoadRequest) (*pb.VideoDeteilUpoadReplay, error) {
 	tags_arr := in.GetTags()
 	tags := strings.Join(tags_arr, ",")
 	uuid, err := uuid.Parse(in.GetVideoUuid())
@@ -108,19 +108,20 @@ func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDetei
 	}
 
 	form := form.VideoForm{
-		UUID:     uuid,
-		Title:    in.GetTitle(),
-		Explain:  in.GetExplain(),
-		Tags:     tags,
-		Category: in.GetCategory(),
+		UUID:         uuid,
+		Title:        in.GetTitle(),
+		Explain:      in.GetExplain(),
+		Tags:         tags,
+		Category:     in.GetCategory(),
+		TbnExtension: in.GetExtension(),
 	}
 
-	_, err = s.Interactor.Save(form)
+	video, err := s.Interactor.Save(form)
 	if err != nil {
 		return nil, err
 	}
 
-	return &pb.Message{Msg: "ok"}, nil
+	return &pb.VideoDeteilUpoadReplay{Uuid: video.UUID.String()}, nil
 }
 
 func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
