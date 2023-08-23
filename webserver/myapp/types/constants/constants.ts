@@ -18,6 +18,9 @@ class FormOption {
             { value: '非営利団体と社会活動', label: '非営利団体と社会活動' },
         ];
     }
+    static get IMAGE_LIMIT() {
+        return 4000000;
+    }
 }
 
 export default FormOption;
