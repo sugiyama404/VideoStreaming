@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 import FormOption from "@/types/constants/constants";
 const options = FormOption.CATEGORIES
+const imagelimit = FormOption.IMAGE_LIMIT
 
 export default function Home() {
   const [file, setFile] = useState<File>(null);
@@ -45,14 +46,11 @@ export default function Home() {
     const uuid = await response.json()
 
     const tmb_name = uuid.uuid + extension
-    const tmb_data = {
-      file: file,
-      name: tmb_name,
-    }
     const formData = new FormData();
     formData.set('file', file);
     formData.set('name', tmb_name);
-    const tmb_endpoint = '/api/video/thumbnail'
+    var tmb_endpoint = '/api/video/'
+    tmb_endpoint += (file.size < imagelimit) ? 'thumbnail' : 'streamthumbnail'
     const tmb_options = {
       method: 'POST',
       body: formData,

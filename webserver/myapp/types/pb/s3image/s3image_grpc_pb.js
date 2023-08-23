@@ -63,7 +63,7 @@ var ImagetransporterService = exports.ImagetransporterService = {
   },
   imageStreamUpload: {
     path: '/s3image.Imagetransporter/ImageStreamUpload',
-    requestStream: false,
+    requestStream: true,
     responseStream: false,
     requestType: s3image_pb.ImageUpoadRequest,
     responseType: s3image_pb.Message,

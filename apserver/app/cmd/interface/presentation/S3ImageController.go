@@ -5,6 +5,8 @@ import (
 	"app/cmd/interface/repository"
 	"app/cmd/usecase"
 	"context"
+	"fmt"
+	"io"
 	"os"
 
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -45,24 +47,45 @@ func (s *S3ImageServer) ImageUpload(ctx context.Context, in *pb.ImageUpoadReques
 	return &pb.Message{Message: "success"}, nil
 }
 
-func (s *S3ImageServer) ImageStreamUpload(ctx context.Context, in *pb.ImageUpoadRequest) (*pb.Message, error) {
-	f, err := os.Create("/tmp/" + in.GetName())
+func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStreamUploadServer) error {
+	fmt.Println("ImageStreamUpload")
+	filename := ""
+	var imagedata []byte
+
+	for {
+		req, err := stream.Recv()
+		if req.GetName() != "" {
+			filename = req.GetName()
+		}
+		if req.GetImage() != nil {
+			imagedata = append(imagedata, req.GetImage()...)
+		}
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+	}
+
+	f, err := os.Create("/tmp/" + filename)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer f.Close()
 
-	_, err = f.Write(in.GetImage())
+	_, err = f.Write(imagedata)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = s.Interactor.ImageUpload(in.GetName(), f)
+	err = s.Interactor.ImageUpload(filename, f)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	os.Remove("/tmp/" + in.GetName())
-	return &pb.Message{Message: "success"}, nil
+	os.Remove("/tmp/" + filename)
+	return stream.SendAndClose(&pb.Message{Message: "success"})
 }
 
 func (s *S3ImageServer) ImageDownload(ctx context.Context, in *pb.ImageDownloadRequest) (*pb.ImageDownloadResponse, error) {
