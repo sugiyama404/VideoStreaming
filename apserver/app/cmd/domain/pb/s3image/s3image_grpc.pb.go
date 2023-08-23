@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ImagetransporterClient interface {
 	ImageUpload(ctx context.Context, in *ImageUpoadRequest, opts ...grpc.CallOption) (*Message, error)
+	ImageStreamUpload(ctx context.Context, in *ImageUpoadRequest, opts ...grpc.CallOption) (*Message, error)
 	ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadResponse, error)
 }
 
@@ -43,6 +44,15 @@ func (c *imagetransporterClient) ImageUpload(ctx context.Context, in *ImageUpoad
 	return out, nil
 }
 
+func (c *imagetransporterClient) ImageStreamUpload(ctx context.Context, in *ImageUpoadRequest, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/s3image.Imagetransporter/ImageStreamUpload", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *imagetransporterClient) ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadResponse, error) {
 	out := new(ImageDownloadResponse)
 	err := c.cc.Invoke(ctx, "/s3image.Imagetransporter/ImageDownload", in, out, opts...)
@@ -57,6 +67,7 @@ func (c *imagetransporterClient) ImageDownload(ctx context.Context, in *ImageDow
 // for forward compatibility
 type ImagetransporterServer interface {
 	ImageUpload(context.Context, *ImageUpoadRequest) (*Message, error)
+	ImageStreamUpload(context.Context, *ImageUpoadRequest) (*Message, error)
 	ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadResponse, error)
 	mustEmbedUnimplementedImagetransporterServer()
 }
@@ -67,6 +78,9 @@ type UnimplementedImagetransporterServer struct {
 
 func (UnimplementedImagetransporterServer) ImageUpload(context.Context, *ImageUpoadRequest) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImageUpload not implemented")
+}
+func (UnimplementedImagetransporterServer) ImageStreamUpload(context.Context, *ImageUpoadRequest) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImageStreamUpload not implemented")
 }
 func (UnimplementedImagetransporterServer) ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImageDownload not implemented")
@@ -102,6 +116,24 @@ func _Imagetransporter_ImageUpload_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Imagetransporter_ImageStreamUpload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageUpoadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImagetransporterServer).ImageStreamUpload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/s3image.Imagetransporter/ImageStreamUpload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImagetransporterServer).ImageStreamUpload(ctx, req.(*ImageUpoadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Imagetransporter_ImageDownload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ImageDownloadRequest)
 	if err := dec(in); err != nil {
@@ -130,6 +162,10 @@ var Imagetransporter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ImageUpload",
 			Handler:    _Imagetransporter_ImageUpload_Handler,
+		},
+		{
+			MethodName: "ImageStreamUpload",
+			Handler:    _Imagetransporter_ImageStreamUpload_Handler,
 		},
 		{
 			MethodName: "ImageDownload",

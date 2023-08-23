@@ -45,6 +45,26 @@ func (s *S3ImageServer) ImageUpload(ctx context.Context, in *pb.ImageUpoadReques
 	return &pb.Message{Message: "success"}, nil
 }
 
+func (s *S3ImageServer) ImageStreamUpload(ctx context.Context, in *pb.ImageUpoadRequest) (*pb.Message, error) {
+	f, err := os.Create("/tmp/" + in.GetName())
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	_, err = f.Write(in.GetImage())
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.Interactor.ImageUpload(in.GetName(), f)
+	if err != nil {
+		return nil, err
+	}
+	os.Remove("/tmp/" + in.GetName())
+	return &pb.Message{Message: "success"}, nil
+}
+
 func (s *S3ImageServer) ImageDownload(ctx context.Context, in *pb.ImageDownloadRequest) (*pb.ImageDownloadResponse, error) {
 	res, err := s.Interactor.ImageDownload(in.GetName())
 	if err != nil {
