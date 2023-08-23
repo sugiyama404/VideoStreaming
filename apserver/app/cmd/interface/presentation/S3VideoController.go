@@ -116,12 +116,19 @@ func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDetei
 		TbnExtension: in.GetExtension(),
 	}
 
-	video, err := s.Interactor.Save(form)
+	err = s.Interactor.Save(form)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
-	return &pb.VideoDeteilUpoadReplay{Uuid: video.UUID.String()}, nil
+	video, err := s.Interactor.GetByUUID(uuid)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &pb.VideoDeteilUpoadReplay{Uuid: video.TbnUuid.String()}, nil
 }
 
 func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {

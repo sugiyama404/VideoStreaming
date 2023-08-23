@@ -5,28 +5,12 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import React, { useState } from "react";
 //@ts-ignore
 import { TagsInput } from "react-tag-input-component";
-
-const options = [
-  { value: '映画とアニメ', label: '映画とアニメ' },
-  { value: '自動車、乗り物', label: '自動車、乗り物' },
-  { value: '音楽', label: '音楽' },
-  { value: 'ペットと動物', label: 'ペットと動物' },
-  { value: 'スポーツ', label: 'スポーツ' },
-  { value: '旅行とイベント', label: '旅行とイベント' },
-  { value: 'ゲーム', label: 'ゲーム' },
-  { value: 'ブログ', label: 'ブログ' },
-  { value: 'コメディ', label: 'コメディ' },
-  { value: 'エンターテイメント', label: 'エンターテイメント' },
-  { value: 'ニュースと政治', label: 'ニュースと政治' },
-  { value: 'ハウツーとスタイル', label: 'ハウツーとスタイル' },
-  { value: '教育', label: '教育' },
-  { value: '科学と技術', label: '科学と技術' },
-  { value: '非営利団体と社会活動', label: '非営利団体と社会活動' },
-]
+import FormOption from "@/types/constants/constants";
+const options = FormOption.CATEGORIES
 
 export default function Home() {
   const [file, setFile] = useState<File>(null);
-  const [selected, setSelected] = useState([""]);
+  const [selected, setSelected] = useState([]);
   const searchParams = useSearchParams()
   const search = searchParams.get('name')
 
@@ -34,15 +18,16 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
-    var extension = file[0].type
-    console.log(extension)
+    var extension = file.type // image/png
+    extension = extension.split('/')[1]
+    const option_num = event.target.category.selectedIndex
+    const str = event.target.category.options[option_num].value;
 
     const data = {
       uuid: event.target.uuid.value,
       title: event.target.title.value,
       explain: event.target.explain.value,
-      category: event.target.category.value,
+      category: str,
       tags: selected,
       extension: extension,
     }
@@ -58,21 +43,19 @@ export default function Home() {
     }
     const response = await fetch(endpoint, options)
     const uuid = await response.json()
-    console.log(uuid.uuid)
 
     const tmb_name = uuid.uuid + extension
     const tmb_data = {
       file: file,
       name: tmb_name,
     }
-    const tmb_endpoint = '/api/video/upload'
-    const tmb_JSONdata = JSON.stringify(tmb_data)
+    const formData = new FormData();
+    formData.set('file', file);
+    formData.set('name', tmb_name);
+    const tmb_endpoint = '/api/video/thumbnail'
     const tmb_options = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: tmb_JSONdata,
+      body: formData,
     }
     const tmb_response = await fetch(tmb_endpoint, tmb_options)
     console.log(tmb_response)
@@ -96,14 +79,14 @@ export default function Home() {
           placeHolder="enter tags"
         />
         <h3>サムネイル</h3>
-        <div uk-form-custom="true">
+        <div uk-form-custom="true" className="uk-form-custom">
           <input type="file" aria-label="Custom controls" onChange={(e) => setFile(e.target.files[0])} />
           <button className="uk-button uk-button-default" type="button" tabIndex="-1">Select</button>
         </div>
         <h3>カテゴリー</h3>
-        <select className="uk-select">
+        <select className="uk-select" name="category">
           {options.map((option) => (
-            <option value={option.value} key={option.value} name="category">
+            <option value={option.value} key={option.value}>
               {option.label}
             </option>
           ))}

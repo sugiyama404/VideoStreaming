@@ -10,10 +10,14 @@ const target: string = process.env.APSERVER_ADDRESS;
 export async function POST(request: NextRequest) {
     const client = new ImagetransporterClient(target, grpc.credentials.createInsecure());
     const req = new ImageUpoadRequest();
-    const req_data = await request.json();
-    const { file, name } = req_data;
+    const data1 = await request.formData();
+    const file: File = await data1.get('file') as File
+    const name: string = await data1.get('name') as string
+
     if (!!name) req.setName(name);
-    if (!!file) req.setImage(file);
+    const blob = new Blob([file], { type: file.type })
+    const fileAsByteArray = await blobToUint8Array(blob);
+    if (!!fileAsByteArray) req.setImage(fileAsByteArray);
     const res = await new Promise<Message>((resolve, reject) => {
         client.imageUpload(req, (err, res) => {
             if (err) reject(err);
@@ -21,4 +25,9 @@ export async function POST(request: NextRequest) {
         });
     });
     return NextResponse.json({ message: res.getMessage() })
+}
+
+async function blobToUint8Array(blob: Blob): Promise<Uint8Array> {
+    const arrayBuffer = await blob.arrayBuffer();
+    return new Uint8Array(arrayBuffer);
 }

@@ -21,13 +21,12 @@ export async function POST(request: NextRequest) {
     if (!!category) { req.setCategory(category) }
     if (!!tags) { req.setTagsList(tags) }
     if (!!extension) { req.setExtension$(extension) }
-    console.log(req);
 
-    const res = await new Promise<VideoDeteilUpoadReplay>((resolve, reject) => {
+    const res = await new Promise((resolve, reject) => {
         client.videoDeteilUpload(req, (err, res) => {
             if (err) reject(err);
-            resolve(res);
+            resolve(res.getUuid());
         });
     });
-    return NextResponse.json({ uuid: res.getUuid })
+    return NextResponse.json({ uuid: res })
 }
