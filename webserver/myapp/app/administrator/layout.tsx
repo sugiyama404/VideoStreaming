@@ -15,7 +15,7 @@ export default function AdminLayout({
 }) {
   return (
     <div className="uk-background-muted uk-padding uk-margin">
-      <div uk-grid="true">
+      <div uk-grid="true" className="uk-grid">
         <div className="uk-width-1-4 uk-card uk-card-default uk-card-body uk-first-column">
           <Adminsidebar />
         </div>
