@@ -61,6 +61,17 @@ var ImagetransporterService = exports.ImagetransporterService = {
     responseSerialize: serialize_s3image_Message,
     responseDeserialize: deserialize_s3image_Message,
   },
+  imageStreamUpload: {
+    path: '/s3image.Imagetransporter/ImageStreamUpload',
+    requestStream: false,
+    responseStream: false,
+    requestType: s3image_pb.ImageUpoadRequest,
+    responseType: s3image_pb.Message,
+    requestSerialize: serialize_s3image_ImageUpoadRequest,
+    requestDeserialize: deserialize_s3image_ImageUpoadRequest,
+    responseSerialize: serialize_s3image_Message,
+    responseDeserialize: deserialize_s3image_Message,
+  },
   imageDownload: {
     path: '/s3image.Imagetransporter/ImageDownload',
     requestStream: false,
