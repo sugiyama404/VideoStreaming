@@ -6,7 +6,8 @@ import * as grpc from '@grpc/grpc-js';
 
 import { VideotransporterClient } from '@/types/pb/s3video/s3video_grpc_pb';
 import { VideoUpoadRequest } from '@/types/pb/s3video/s3video_pb';
-const CHUNK_SIZE = 10 ** 6;
+import FormOption from "@/types/constants/constants";
+const CHUNK_SIZE = FormOption.CHUNK_SIZE;
 //@ts-ignore
 const target: string = 'apserver:8080';
 

@@ -69,6 +69,8 @@ export class VideoDeteilUpoadRequest extends jspb.Message {
     setCategory(value: string): VideoDeteilUpoadRequest;
     getExtension$(): string;
     setExtension$(value: string): VideoDeteilUpoadRequest;
+    getOversize(): boolean;
+    setOversize(value: boolean): VideoDeteilUpoadRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): VideoDeteilUpoadRequest.AsObject;
@@ -88,6 +90,7 @@ export namespace VideoDeteilUpoadRequest {
         tagsList: Array<string>,
         category: string,
         extension: string,
+        oversize: boolean,
     }
 }
 

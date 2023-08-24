@@ -17,6 +17,7 @@ type Video struct {
 	Category     string     `json:"category"`
 	TbnUuid      uuid.UUID  `gorm:"type:binary(16);default:(UUID_TO_BIN(UUID()));unique" json:"tbn_uuid"`
 	TbnExtension string     `json:"tbn_extension"`
+	TbnOverSize  bool       `json:"tbn_over_size"`
 	CreatedAt    time.Time  `json:"created_at"`
 	UpdatedAt    time.Time  `json:"updated_at"`
 	DeletedAt    *time.Time `json:"deleted_at"`

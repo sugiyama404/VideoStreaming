@@ -14,4 +14,5 @@ type VideoForm struct {
 	Category     string
 	TbnUuid      string
 	TbnExtension string
+	TbnOverSize  bool
 }
