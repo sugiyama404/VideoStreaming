@@ -28,6 +28,7 @@ message VideoDeteilUpoadRequest {
     repeated string tags = 4;
     string category = 5;
     string extension = 6;
+    bool oversize = 7;
 }
 
 message VideoDeteilUpoadReplay {

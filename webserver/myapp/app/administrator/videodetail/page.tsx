@@ -23,6 +23,7 @@ export default function Home() {
     extension = extension.split('/')[1]
     const option_num = event.target.category.selectedIndex
     const str = event.target.category.options[option_num].value;
+    const sizeoverflag: boolean = file.size > imagelimit
 
     const data = {
       uuid: event.target.uuid.value,
@@ -31,6 +32,7 @@ export default function Home() {
       category: str,
       tags: selected,
       extension: extension,
+      sizeover: sizeoverflag,
     }
 
     const JSONdata = JSON.stringify(data)
@@ -45,18 +47,17 @@ export default function Home() {
     const response = await fetch(endpoint, options)
     const uuid = await response.json()
 
-    const tmb_name = uuid.uuid + extension
+    const tmb_name = uuid.uuid + '.' + extension
+    console.log(tmb_name)
     const formData = new FormData();
     formData.set('file', file);
     formData.set('name', tmb_name);
-    var tmb_endpoint = '/api/video/'
-    tmb_endpoint += (file.size < imagelimit) ? 'thumbnail' : 'streamthumbnail'
+    const tmb_endpoint = sizeoverflag ? '/api/video/streamthumbnail' : '/api/video/thumbnail'
     const tmb_options = {
       method: 'POST',
       body: formData,
     }
-    const tmb_response = await fetch(tmb_endpoint, tmb_options)
-    console.log(tmb_response)
+    await fetch(tmb_endpoint, tmb_options)
     router.push('/administrator')
 
   }

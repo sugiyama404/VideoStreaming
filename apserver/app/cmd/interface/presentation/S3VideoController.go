@@ -114,6 +114,7 @@ func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDetei
 		Tags:         tags,
 		Category:     in.GetCategory(),
 		TbnExtension: in.GetExtension(),
+		TbnOverSize:  in.GetOversize(),
 	}
 
 	err = s.Interactor.Save(form)

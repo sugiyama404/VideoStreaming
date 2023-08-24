@@ -541,7 +541,8 @@ proto.s3video.VideoDeteilUpoadRequest.toObject = function(includeInstance, msg) 
     explain: jspb.Message.getFieldWithDefault(msg, 3, ""),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
     category: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    extension: jspb.Message.getFieldWithDefault(msg, 6, "")
+    extension: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    oversize: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -601,6 +602,10 @@ proto.s3video.VideoDeteilUpoadRequest.deserializeBinaryFromReader = function(msg
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtension$(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setOversize(value);
       break;
     default:
       reader.skipField();
@@ -670,6 +675,13 @@ proto.s3video.VideoDeteilUpoadRequest.serializeBinaryToWriter = function(message
   if (f.length > 0) {
     writer.writeString(
       6,
+      f
+    );
+  }
+  f = message.getOversize();
+  if (f) {
+    writer.writeBool(
+      7,
       f
     );
   }
@@ -800,6 +812,24 @@ proto.s3video.VideoDeteilUpoadRequest.prototype.getExtension$ = function() {
  */
 proto.s3video.VideoDeteilUpoadRequest.prototype.setExtension$ = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional bool oversize = 7;
+ * @return {boolean}
+ */
+proto.s3video.VideoDeteilUpoadRequest.prototype.getOversize = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.s3video.VideoDeteilUpoadRequest} returns this
+ */
+proto.s3video.VideoDeteilUpoadRequest.prototype.setOversize = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 

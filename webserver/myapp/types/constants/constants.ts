@@ -21,6 +21,9 @@ class FormOption {
     static get IMAGE_LIMIT() {
         return 4000000;
     }
+    static get CHUNK_SIZE() {
+        return 10 ** 6;
+    }
 }
 
 export default FormOption;

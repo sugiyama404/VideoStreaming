@@ -26,6 +26,7 @@ func (m *VideoRepository) Update(form form.VideoForm) error {
 		Tags:         form.Tags,
 		Category:     form.Category,
 		TbnExtension: form.TbnExtension,
+		TbnOverSize:  form.TbnOverSize,
 	}).Error
 	return err
 }
