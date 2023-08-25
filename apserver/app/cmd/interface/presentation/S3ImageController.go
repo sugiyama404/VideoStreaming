@@ -12,7 +12,6 @@ import (
 	"image/png"
 	"io"
 	"os"
-	"strings"
 
 	"github.com/aws/aws-sdk-go/service/s3"
 	"golang.org/x/exp/slices"
@@ -74,45 +73,39 @@ func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStream
 			return err
 		}
 	}
-	fmt.Println(len(imagedata)) //6153753
 
-	img, _, err := image.Decode(bytes.NewReader(imagedata))
+	img, format, err := image.Decode(bytes.NewReader(imagedata))
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 
-	var buf bytes.Buffer
-
 	f, err := os.Create("/tmp/" + filename)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	defer f.Close()
 
-	filename_c := strings.Clone(filename)
-	arr := strings.Split(filename_c, ".")
 	opt := jpeg.Options{
 		Quality: 90,
 	}
 
-	if slices.Contains([]string{"jpg", "jpeg", "JPG", "JPEG", "jpe", "jfif", "pjpeg", "pjp"}, arr[len(arr)-1]) {
-		err = jpeg.Encode(&buf, img, &opt)
-	} else if arr[len(arr)-1] == "png" {
-		err = png.Encode(&buf, img)
+	if slices.Contains([]string{"jpg", "jpeg", "JPG", "JPEG", "jpe", "jfif", "pjpeg", "pjp"}, format) {
+		fmt.Println("jpg")
+		err = jpeg.Encode(f, img, &opt)
+	} else if format == "png" {
+		fmt.Println("png")
+		err = png.Encode(f, img)
 	}
 	if err != nil {
-		return err
-	}
-
-	pngData := buf.Bytes()
-
-	_, err = f.Write(pngData)
-	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 
 	err = s.Interactor.ImageUpload(filename, f)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	os.Remove("/tmp/" + filename)
