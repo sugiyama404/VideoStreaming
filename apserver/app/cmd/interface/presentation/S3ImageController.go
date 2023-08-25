@@ -4,17 +4,12 @@ import (
 	pb "app/cmd/domain/pb/s3image"
 	"app/cmd/interface/repository"
 	"app/cmd/usecase"
-	"bytes"
 	"context"
 	"fmt"
-	"image"
-	"image/jpeg"
-	"image/png"
 	"io"
 	"os"
 
 	"github.com/aws/aws-sdk-go/service/s3"
-	"golang.org/x/exp/slices"
 )
 
 type S3ImageServer struct {
@@ -74,12 +69,6 @@ func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStream
 		}
 	}
 
-	img, format, err := image.Decode(bytes.NewReader(imagedata))
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-
 	f, err := os.Create("/tmp/" + filename)
 	if err != nil {
 		fmt.Println(err)
@@ -87,18 +76,7 @@ func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStream
 	}
 	defer f.Close()
 
-	opt := jpeg.Options{
-		Quality: 90,
-	}
-
-	if slices.Contains([]string{"jpg", "jpeg", "JPG", "JPEG", "jpe", "jfif", "pjpeg", "pjp"}, format) {
-		fmt.Println("jpg")
-		err = jpeg.Encode(f, img, &opt)
-	} else if format == "png" {
-		fmt.Println("png")
-		err = png.Encode(f, img)
-	}
-	if err != nil {
+	if err := os.WriteFile("/tmp/"+filename, imagedata, 0666); err != nil {
 		fmt.Println(err)
 		return err
 	}
