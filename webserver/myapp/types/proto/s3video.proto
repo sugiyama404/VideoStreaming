@@ -6,6 +6,7 @@ service Videotransporter {
     rpc VideoUpload (stream VideoUpoadRequest) returns (VideoUploadReplay) {}
     rpc VideoDeteilUpload (VideoDeteilUpoadRequest) returns (VideoDeteilUpoadReplay) {}
     rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
+    rpc VideoList (Empty) returns (VideoListReplay) {}
 }
 
 message VideoUpoadRequest {
@@ -40,4 +41,23 @@ message VideoDownloadRequest {
 
 message VideoDownloadReplay {
     bytes data = 1;
+}
+
+message Empty {
+}
+
+message VideoListReplay {
+    repeated VideoListObjects videolistobject = 1;
+}
+
+message VideoListObjects {
+    int64 id = 1;
+    string title = 2;
+    string category = 3;
+    repeated TagsObjects tagsobjects =4;
+    string explain = 5;
+}
+
+message TagsObjects {
+    string tags = 1;
 }
