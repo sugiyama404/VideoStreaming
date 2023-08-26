@@ -12,6 +12,12 @@ type VideoRepository struct {
 	Conn *gorm.DB
 }
 
+func (m *VideoRepository) FindAll() ([]model.Video, error) {
+	videos := []model.Video{}
+	err := m.Conn.Find(&videos).Error
+	return videos, err
+}
+
 func (m *VideoRepository) SaveByIDAndSize(id int, size int) (model.Video, error) {
 	video := model.Video{UserID: id, Size: size}
 	err := m.Conn.Create(&video).Error
