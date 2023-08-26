@@ -163,3 +163,31 @@ func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDow
 	}
 	return nil, nil
 }
+
+func (s *S3VideoServer) VideoList(ctx context.Context, in *pb.Empty) (*pb.VideoListReplay, error) {
+	video, err := s.Interactor.Show()
+	if err != nil {
+		return nil, err
+	}
+
+	tasks := make([]*pb.VideoListObjects, 0)
+	for _, v := range video {
+		arr := strings.Split(v.Tags, ",")
+		tagsobjects := make([]*pb.TagsObjects, 0)
+		for _, vv := range arr {
+			tagsobjects = append(tagsobjects, &pb.TagsObjects{
+				Tags: vv,
+			})
+		}
+		tasks = append(tasks, &pb.VideoListObjects{
+			Id:          int64(v.ID),
+			Title:       v.Title,
+			Category:    v.Category,
+			Tagsobjects: tagsobjects,
+			Explain:     v.Explain,
+		})
+
+	}
+	return &pb.VideoListReplay{Videolistobject: tasks}, nil
+
+}

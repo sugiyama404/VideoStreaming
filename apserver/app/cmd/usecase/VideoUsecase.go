@@ -12,6 +12,10 @@ type VideoUseCase struct {
 	Repository repository.VideoRepository
 }
 
+func (u *VideoUseCase) Show() ([]model.Video, error) {
+	return u.Repository.FindAll()
+}
+
 func (u *VideoUseCase) CreateByIDAndSize(id int, size int) (model.Video, error) {
 	return u.Repository.SaveByIDAndSize(id, size)
 }
