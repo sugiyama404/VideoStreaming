@@ -1,5 +1,5 @@
 export interface Videolist {
-    id: string;
+    id: number;
     title: string;
     category: string;
     tags: string[];
