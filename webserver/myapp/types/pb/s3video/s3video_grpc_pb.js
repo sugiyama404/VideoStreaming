@@ -4,6 +4,17 @@
 var grpc = require('@grpc/grpc-js');
 var s3video_pb = require('./s3video_pb.js');
 
+function serialize_s3video_Empty(arg) {
+  if (!(arg instanceof s3video_pb.Empty)) {
+    throw new Error('Expected argument of type s3video.Empty');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_Empty(buffer_arg) {
+  return s3video_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_s3video_VideoDeteilUpoadReplay(arg) {
   if (!(arg instanceof s3video_pb.VideoDeteilUpoadReplay)) {
     throw new Error('Expected argument of type s3video.VideoDeteilUpoadReplay');
@@ -46,6 +57,17 @@ function serialize_s3video_VideoDownloadRequest(arg) {
 
 function deserialize_s3video_VideoDownloadRequest(buffer_arg) {
   return s3video_pb.VideoDownloadRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_s3video_VideoListReplay(arg) {
+  if (!(arg instanceof s3video_pb.VideoListReplay)) {
+    throw new Error('Expected argument of type s3video.VideoListReplay');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_VideoListReplay(buffer_arg) {
+  return s3video_pb.VideoListReplay.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_s3video_VideoUploadReplay(arg) {
@@ -104,6 +126,17 @@ var VideotransporterService = exports.VideotransporterService = {
     requestDeserialize: deserialize_s3video_VideoDownloadRequest,
     responseSerialize: serialize_s3video_VideoDownloadReplay,
     responseDeserialize: deserialize_s3video_VideoDownloadReplay,
+  },
+  videoList: {
+    path: '/s3video.Videotransporter/VideoList',
+    requestStream: false,
+    responseStream: false,
+    requestType: s3video_pb.Empty,
+    responseType: s3video_pb.VideoListReplay,
+    requestSerialize: serialize_s3video_Empty,
+    requestDeserialize: deserialize_s3video_Empty,
+    responseSerialize: serialize_s3video_VideoListReplay,
+    responseDeserialize: deserialize_s3video_VideoListReplay,
   },
 };
 

@@ -161,3 +161,96 @@ export namespace VideoDownloadReplay {
         data: Uint8Array | string,
     }
 }
+
+export class Empty extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Empty.AsObject;
+    static toObject(includeInstance: boolean, msg: Empty): Empty.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Empty, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Empty;
+    static deserializeBinaryFromReader(message: Empty, reader: jspb.BinaryReader): Empty;
+}
+
+export namespace Empty {
+    export type AsObject = {
+    }
+}
+
+export class VideoListReplay extends jspb.Message { 
+    clearVideolistobjectList(): void;
+    getVideolistobjectList(): Array<VideoListObjects>;
+    setVideolistobjectList(value: Array<VideoListObjects>): VideoListReplay;
+    addVideolistobject(value?: VideoListObjects, index?: number): VideoListObjects;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoListReplay.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoListReplay): VideoListReplay.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoListReplay, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoListReplay;
+    static deserializeBinaryFromReader(message: VideoListReplay, reader: jspb.BinaryReader): VideoListReplay;
+}
+
+export namespace VideoListReplay {
+    export type AsObject = {
+        videolistobjectList: Array<VideoListObjects.AsObject>,
+    }
+}
+
+export class VideoListObjects extends jspb.Message { 
+    getId(): number;
+    setId(value: number): VideoListObjects;
+    getTitle(): string;
+    setTitle(value: string): VideoListObjects;
+    getCategory(): string;
+    setCategory(value: string): VideoListObjects;
+    clearTagsobjectsList(): void;
+    getTagsobjectsList(): Array<TagsObjects>;
+    setTagsobjectsList(value: Array<TagsObjects>): VideoListObjects;
+    addTagsobjects(value?: TagsObjects, index?: number): TagsObjects;
+    getExplain(): string;
+    setExplain(value: string): VideoListObjects;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoListObjects.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoListObjects): VideoListObjects.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoListObjects, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoListObjects;
+    static deserializeBinaryFromReader(message: VideoListObjects, reader: jspb.BinaryReader): VideoListObjects;
+}
+
+export namespace VideoListObjects {
+    export type AsObject = {
+        id: number,
+        title: string,
+        category: string,
+        tagsobjectsList: Array<TagsObjects.AsObject>,
+        explain: string,
+    }
+}
+
+export class TagsObjects extends jspb.Message { 
+    getTags(): string;
+    setTags(value: string): TagsObjects;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TagsObjects.AsObject;
+    static toObject(includeInstance: boolean, msg: TagsObjects): TagsObjects.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TagsObjects, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TagsObjects;
+    static deserializeBinaryFromReader(message: TagsObjects, reader: jspb.BinaryReader): TagsObjects;
+}
+
+export namespace TagsObjects {
+    export type AsObject = {
+        tags: string,
+    }
+}
