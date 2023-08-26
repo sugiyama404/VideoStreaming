@@ -1,7 +1,9 @@
 import { Videolist } from '@/types/typing/video';
+//@ts-ignore
+const target: string = process.env.NEXTAUTH_URL;
 
 async function fetchData() {
-  const endpoint = 'http://localhost/api/video/list'
+  const endpoint = target + '/api/video/list'
   const res = await fetch(endpoint, {
     cache: "no-store",
   });
