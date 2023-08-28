@@ -56,6 +56,8 @@ export namespace AuthUserReply {
 }
 
 export class UserInfo extends jspb.Message { 
+    getId(): number;
+    setId(value: number): UserInfo;
     getName(): string;
     setName(value: string): UserInfo;
     getEmail(): string;
@@ -75,6 +77,7 @@ export class UserInfo extends jspb.Message {
 
 export namespace UserInfo {
     export type AsObject = {
+        id: number,
         name: string,
         email: string,
         role: string,
