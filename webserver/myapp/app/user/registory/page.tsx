@@ -97,7 +97,7 @@ export default function Home() {
             </div>
           </div>
           <div className="uk-margin">
-            <button className="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">送信</button>
+            <button className="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" type="submit">送信</button>
           </div>
         </form>
       </div>

@@ -10,5 +10,5 @@ export async function GET() {
 
     console.log(session?.user)
 
-    return NextResponse.json({ message: "ok" });
+    return NextResponse.json({ user: session?.user });
 }

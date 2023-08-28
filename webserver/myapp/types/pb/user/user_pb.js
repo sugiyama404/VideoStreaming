@@ -504,9 +504,10 @@ proto.user.UserInfo.prototype.toObject = function(opt_includeInstance) {
  */
 proto.user.UserInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    role: jspb.Message.getFieldWithDefault(msg, 3, "")
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    role: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -544,14 +545,18 @@ proto.user.UserInfo.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setId(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEmail(value);
+      msg.setName(value);
       break;
     case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEmail(value);
+      break;
+    case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setRole(value);
       break;
@@ -584,24 +589,31 @@ proto.user.UserInfo.prototype.serializeBinary = function() {
  */
 proto.user.UserInfo.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getId();
+  if (f !== 0) {
+    writer.writeInt64(
       1,
       f
     );
   }
-  f = message.getEmail();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getRole();
+  f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getRole();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -609,28 +621,28 @@ proto.user.UserInfo.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string name = 1;
+ * optional int64 id = 1;
+ * @return {number}
+ */
+proto.user.UserInfo.prototype.getId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.user.UserInfo} returns this
+ */
+proto.user.UserInfo.prototype.setId = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string name = 2;
  * @return {string}
  */
 proto.user.UserInfo.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.user.UserInfo} returns this
- */
-proto.user.UserInfo.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string email = 2;
- * @return {string}
- */
-proto.user.UserInfo.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -639,16 +651,16 @@ proto.user.UserInfo.prototype.getEmail = function() {
  * @param {string} value
  * @return {!proto.user.UserInfo} returns this
  */
-proto.user.UserInfo.prototype.setEmail = function(value) {
+proto.user.UserInfo.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string role = 3;
+ * optional string email = 3;
  * @return {string}
  */
-proto.user.UserInfo.prototype.getRole = function() {
+proto.user.UserInfo.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -657,8 +669,26 @@ proto.user.UserInfo.prototype.getRole = function() {
  * @param {string} value
  * @return {!proto.user.UserInfo} returns this
  */
-proto.user.UserInfo.prototype.setRole = function(value) {
+proto.user.UserInfo.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string role = 4;
+ * @return {string}
+ */
+proto.user.UserInfo.prototype.getRole = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.user.UserInfo} returns this
+ */
+proto.user.UserInfo.prototype.setRole = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
