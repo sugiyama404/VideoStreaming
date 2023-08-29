@@ -12,7 +12,7 @@ export default function Upload() {
         <div className="uk-margin uk-text-center uk-padding" uk-margin="true">
           <div uk-form-custom="target: true" suppressHydrationWarning={true}>
             <input type="hidden" name="id" value={session?.user?.id} />
-            <input type="file" name="file" aria-label="Custom controls" />
+            <input type="file" name="file" aria-label="Custom controls" required />
             <input className="uk-input uk-form-width-medium" type="text" placeholder="Select file" aria-label="Custom controls" disabled />
           </div>
           <button className="uk-button uk-button-default" type="submit">
