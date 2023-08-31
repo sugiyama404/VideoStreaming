@@ -47,8 +47,7 @@ export default function Home() {
     const response = await fetch(endpoint, options)
     const uuid = await response.json()
 
-    const tmb_name = uuid.uuid + '.' + extension
-    console.log(tmb_name)
+    const tmb_name = await (uuid.uuid + '.' + extension)
     const formData = new FormData();
     formData.set('file', file);
     formData.set('name', tmb_name);

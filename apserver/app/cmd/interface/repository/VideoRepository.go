@@ -38,7 +38,7 @@ func (m *VideoRepository) Update(form form.VideoForm) error {
 }
 
 func (m *VideoRepository) FindByUUID(uuid uuid.UUID) (model.Video, error) {
-	video := model.Video{UUID: uuid}
-	err := m.Conn.First(&video).Error
+	video := model.Video{}
+	err := m.Conn.First(&video, "uuid = UUID_TO_BIN(?)", uuid).Error
 	return video, err
 }
