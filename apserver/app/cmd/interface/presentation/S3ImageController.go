@@ -39,8 +39,8 @@ func (s *S3ImageServer) ImageUpload(ctx context.Context, in *pb.ImageUpoadReques
 	}
 	defer f.Close()
 
-	_, err = f.Write(in.GetImage())
-	if err != nil {
+	if err := os.WriteFile("/tmp/"+in.GetName(), in.GetImage(), 0666); err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
