@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server'
 //@ts-ignore
 import * as grpc from '@grpc/grpc-js';
 import { ImagetransporterClient } from '@/types/pb/s3image/s3image_grpc_pb';
-import { ImageDownloadRequest, ImageDownloadReplay } from '@/types/pb/s3image/s3image_pb';
+import { ImageDownloadRequest } from '@/types/pb/s3image/s3image_pb';
 //@ts-ignore
 const target: string = process.env.APSERVER_ADDRESS;
 
@@ -17,6 +17,7 @@ export async function GET(request: NextRequest,
     const client: ImagetransporterClient = new ImagetransporterClient(target, grpc.credentials.createInsecure());
     const req: ImageDownloadRequest = new ImageDownloadRequest();
     req.setName(image_name);
+    req.setIsresize(flag);
     req.setReheight(heigh);
     req.setRewidth(width);
 

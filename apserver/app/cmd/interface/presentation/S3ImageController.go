@@ -33,19 +33,22 @@ func InteractorS3Image(conn *s3.S3) *S3ImageServer {
 }
 
 func (s *S3ImageServer) ImageUpload(ctx context.Context, in *pb.ImageUpoadRequest) (*pb.Message, error) {
+	fmt.Println("ImageUpload")
 	f, err := os.Create("/tmp/" + in.GetName())
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	defer f.Close()
 
-	if err := os.WriteFile("/tmp/"+in.GetName(), in.GetImage(), 0666); err != nil {
+	if err := os.WriteFile("/tmp/"+in.GetName(), in.GetImage(), 0644); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
 	err = s.Interactor.ImageUpload(in.GetName(), f)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	os.Remove("/tmp/" + in.GetName())
@@ -73,7 +76,6 @@ func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStream
 			return err
 		}
 	}
-
 	f, err := os.Create("/tmp/" + filename)
 	if err != nil {
 		fmt.Println(err)
@@ -81,7 +83,7 @@ func (s *S3ImageServer) ImageStreamUpload(stream pb.Imagetransporter_ImageStream
 	}
 	defer f.Close()
 
-	if err := os.WriteFile("/tmp/"+filename, imagedata, 0666); err != nil {
+	if err := os.WriteFile("/tmp/"+filename, imagedata, 0664); err != nil {
 		fmt.Println(err)
 		return err
 	}
