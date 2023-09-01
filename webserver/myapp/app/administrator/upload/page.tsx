@@ -8,18 +8,19 @@ export default function Upload() {
   return (
     <div>
       <h1 className="uk-text-center">動画をアップロード</h1>
-      <form action={create}>
-        <div className="uk-margin uk-text-center uk-padding" uk-margin="true">
+
+      <div className="uk-margin uk-text-center uk-padding" uk-margin="true">
+        <form action={create} className="uk-first-column">
           <div uk-form-custom="target: true" suppressHydrationWarning={true}>
-            <input type="hidden" name="id" value={session?.user?.id} />
+            <input type="hidden" name="id" value={session?.user?.id || 0} />
             <input type="file" name="file" aria-label="Custom controls" required />
             <input className="uk-input uk-form-width-medium" type="text" placeholder="Select file" aria-label="Custom controls" disabled />
           </div>
           <button className="uk-button uk-button-default" type="submit">
             Add
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div >
   )
 }
