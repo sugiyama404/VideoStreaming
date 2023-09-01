@@ -7,20 +7,19 @@ import { ImageDownloadRequest } from '@/types/pb/s3image/s3image_pb';
 //@ts-ignore
 const target: string = process.env.APSERVER_ADDRESS;
 
-export async function GET(request: NextRequest,
-    { params }: { params: { name: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { name: string } }) {
     const image_name = params.name;
-    console.log(image_name);
-    const heigh = 220;
-    const width = 320;
-    const flag = true;
     const client: ImagetransporterClient = new ImagetransporterClient(target, grpc.credentials.createInsecure());
     const req: ImageDownloadRequest = new ImageDownloadRequest();
+    var flag = false;
     req.setName(image_name);
+    const sp = request.nextUrl.searchParams;
+    if (!!sp.get("heigh") && !!sp.get("width")) {
+        req.setReheight(parseInt(sp.get("heigh")!));
+        req.setRewidth(parseInt(sp.get("width")!));
+        flag = true;
+    }
     req.setIsresize(flag);
-    req.setReheight(heigh);
-    req.setRewidth(width);
-
     const res = await new Promise((resolve, reject) => {
         client.imageDownload(req, (err, res) => {
             if (err) reject(err);
