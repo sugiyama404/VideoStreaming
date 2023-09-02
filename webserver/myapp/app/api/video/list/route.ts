@@ -18,7 +18,7 @@ export async function GET() {
                 id: v.getId(),
                 title: v.getTitle(),
                 category: v.getCategory(),
-                tags: v.getTagsobjectsList().map(t => t.getTags()),
+                tags: v.getTagsList(),
                 explain: v.getExplain()
             }));
             resolve(r);
