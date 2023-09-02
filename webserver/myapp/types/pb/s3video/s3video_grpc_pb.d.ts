@@ -12,6 +12,7 @@ interface IVideotransporterService extends grpc.ServiceDefinition<grpc.UntypedSe
     videoDeteilUpload: IVideotransporterService_IVideoDeteilUpload;
     videoDownload: IVideotransporterService_IVideoDownload;
     videoList: IVideotransporterService_IVideoList;
+    videoHomeList: IVideotransporterService_IVideoHomeList;
 }
 
 interface IVideotransporterService_IVideoUpload extends grpc.MethodDefinition<s3video_pb.VideoUpoadRequest, s3video_pb.VideoUploadReplay> {
@@ -50,6 +51,15 @@ interface IVideotransporterService_IVideoList extends grpc.MethodDefinition<s3vi
     responseSerialize: grpc.serialize<s3video_pb.VideoListReplay>;
     responseDeserialize: grpc.deserialize<s3video_pb.VideoListReplay>;
 }
+interface IVideotransporterService_IVideoHomeList extends grpc.MethodDefinition<s3video_pb.Empty, s3video_pb.VideoHomeListReplay> {
+    path: "/s3video.Videotransporter/VideoHomeList";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<s3video_pb.Empty>;
+    requestDeserialize: grpc.deserialize<s3video_pb.Empty>;
+    responseSerialize: grpc.serialize<s3video_pb.VideoHomeListReplay>;
+    responseDeserialize: grpc.deserialize<s3video_pb.VideoHomeListReplay>;
+}
 
 export const VideotransporterService: IVideotransporterService;
 
@@ -58,6 +68,7 @@ export interface IVideotransporterServer {
     videoDeteilUpload: grpc.handleUnaryCall<s3video_pb.VideoDeteilUpoadRequest, s3video_pb.VideoDeteilUpoadReplay>;
     videoDownload: grpc.handleUnaryCall<s3video_pb.VideoDownloadRequest, s3video_pb.VideoDownloadReplay>;
     videoList: grpc.handleUnaryCall<s3video_pb.Empty, s3video_pb.VideoListReplay>;
+    videoHomeList: grpc.handleUnaryCall<s3video_pb.Empty, s3video_pb.VideoHomeListReplay>;
 }
 
 export interface IVideotransporterClient {
@@ -74,6 +85,9 @@ export interface IVideotransporterClient {
     videoList(request: s3video_pb.Empty, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
     videoList(request: s3video_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
     videoList(request: s3video_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
+    videoHomeList(request: s3video_pb.Empty, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
+    videoHomeList(request: s3video_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
+    videoHomeList(request: s3video_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
 }
 
 export class VideotransporterClient extends grpc.Client implements IVideotransporterClient {
@@ -91,4 +105,7 @@ export class VideotransporterClient extends grpc.Client implements IVideotranspo
     public videoList(request: s3video_pb.Empty, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
     public videoList(request: s3video_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
     public videoList(request: s3video_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoListReplay) => void): grpc.ClientUnaryCall;
+    public videoHomeList(request: s3video_pb.Empty, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
+    public videoHomeList(request: s3video_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
+    public videoHomeList(request: s3video_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3video_pb.VideoHomeListReplay) => void): grpc.ClientUnaryCall;
 }

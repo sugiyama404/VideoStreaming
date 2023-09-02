@@ -165,29 +165,39 @@ func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDow
 }
 
 func (s *S3VideoServer) VideoList(ctx context.Context, in *pb.Empty) (*pb.VideoListReplay, error) {
-	video, err := s.Interactor.Show()
+	videos, err := s.Interactor.Show()
 	if err != nil {
 		return nil, err
 	}
 
 	tasks := make([]*pb.VideoListObjects, 0)
-	for _, v := range video {
-		arr := strings.Split(v.Tags, ",")
-		tagsobjects := make([]*pb.TagsObjects, 0)
-		for _, vv := range arr {
-			tagsobjects = append(tagsobjects, &pb.TagsObjects{
-				Tags: vv,
-			})
-		}
+	for _, v := range videos {
 		tasks = append(tasks, &pb.VideoListObjects{
-			Id:          int64(v.ID),
-			Title:       v.Title,
-			Category:    v.Category,
-			Tagsobjects: tagsobjects,
-			Explain:     v.Explain,
+			Id:       int64(v.ID),
+			Title:    v.Title,
+			Category: v.Category,
+			Tags:     strings.Split(v.Tags, ","),
+			Explain:  v.Explain,
 		})
 
 	}
 	return &pb.VideoListReplay{Videolistobject: tasks}, nil
+}
 
+func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.VideoHomeListReplay, error) {
+	videos, err := s.Interactor.ShowHome(6)
+	if err != nil {
+		return nil, err
+	}
+
+	tasks := make([]*pb.VideoHomeListObjects, 0)
+	for _, v := range videos {
+		tasks = append(tasks, &pb.VideoHomeListObjects{
+			Uuid:    v.UUID.String(),
+			Title:   v.Title,
+			Explain: v.Explain,
+			Imguuid: v.TbnUuid.String(),
+		})
+	}
+	return &pb.VideoHomeListReplay{Videohomelistobjects: tasks}, nil
 }

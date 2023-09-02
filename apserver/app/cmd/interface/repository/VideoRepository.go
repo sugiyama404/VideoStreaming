@@ -3,6 +3,7 @@ package repository
 import (
 	"app/cmd/domain/form"
 	"app/cmd/domain/model"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
@@ -15,6 +16,13 @@ type VideoRepository struct {
 func (m *VideoRepository) FindAll() ([]model.Video, error) {
 	videos := []model.Video{}
 	err := m.Conn.Find(&videos).Error
+	return videos, err
+}
+
+func (m *VideoRepository) FindAllOrderByUpdatedAtDescLimit(limit int) ([]model.Video, error) {
+	videos := []model.Video{}
+	err := m.Conn.Limit(limit).Debug().Find(&videos).Order("updated_at desc").Error
+	fmt.Println(videos)
 	return videos, err
 }
 
