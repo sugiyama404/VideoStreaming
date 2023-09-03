@@ -11,7 +11,7 @@ export default function Video({ task }: TaskProps) {
     <>
       <div className="uk-card uk-card-default">
         <div className="uk-card-media-top uk-text-center">
-          <Image className="uk-border-circle" width={220} height={300} src={'/api/image/v/' + task.imguuid + '.' + task.imgext + "?heigh=220&width=300"} alt="" />
+          <Image height={300} width={400} src={'/api/image/v/' + task.imguuid + '.' + task.imgext + "?heigh=300&width=400"} alt="" />
         </div>
         <div className="uk-card-body uk-card-small uk-padding-remove uk-margin-small-left uk-margin-small-right">
           <div className="uk-card-title">{task.title}</div>

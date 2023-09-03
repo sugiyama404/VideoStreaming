@@ -9,6 +9,7 @@ const target: string = process.env.APSERVER_ADDRESS;
 
 export async function GET(request: NextRequest, { params }: { params: { name: string } }) {
     const image_name = params.name;
+    console.log(image_name);
     const client: ImagetransporterClient = new ImagetransporterClient(target, grpc.credentials.createInsecure());
     const req: ImageDownloadRequest = new ImageDownloadRequest();
     var flag = false;
