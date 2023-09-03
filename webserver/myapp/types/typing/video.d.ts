@@ -11,4 +11,5 @@ export interface VideoHomelist {
     title: string;
     explain: string;
     imguuid: string;
+    imgext: string;
 }

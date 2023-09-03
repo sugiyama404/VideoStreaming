@@ -266,6 +266,8 @@ export class VideoHomeListObjects extends jspb.Message {
     setExplain(value: string): VideoHomeListObjects;
     getImguuid(): string;
     setImguuid(value: string): VideoHomeListObjects;
+    getImgext(): string;
+    setImgext(value: string): VideoHomeListObjects;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): VideoHomeListObjects.AsObject;
@@ -283,5 +285,6 @@ export namespace VideoHomeListObjects {
         title: string,
         explain: string,
         imguuid: string,
+        imgext: string,
     }
 }

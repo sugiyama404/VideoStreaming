@@ -197,6 +197,7 @@ func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.Vi
 			Title:   v.Title,
 			Explain: v.Explain,
 			Imguuid: v.TbnUuid.String(),
+			Imgext:  v.TbnExtension,
 		})
 	}
 	return &pb.VideoHomeListReplay{Videohomelistobjects: tasks}, nil

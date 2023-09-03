@@ -20,7 +20,7 @@ func (m *VideoRepository) FindAll() ([]model.Video, error) {
 
 func (m *VideoRepository) FindAllOrderByUpdatedAtDescLimit(limit int) ([]model.Video, error) {
 	videos := []model.Video{}
-	err := m.Conn.Limit(limit).Order("updated_at desc").Debug().Find(&videos).Error
+	err := m.Conn.Limit(limit).Order("updated_at desc").Find(&videos).Error
 	return videos, err
 }
 
