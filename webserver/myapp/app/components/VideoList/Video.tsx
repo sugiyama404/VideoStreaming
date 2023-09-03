@@ -1,7 +1,8 @@
 "use client";
+import { VideoHomelist } from '@/types/typing/video';
 
 interface TaskProps {
-  task
+  task: VideoHomelist;
 }
 
 export default function Video({ task }: TaskProps) {
