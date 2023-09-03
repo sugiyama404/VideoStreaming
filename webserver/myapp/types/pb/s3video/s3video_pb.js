@@ -2149,7 +2149,8 @@ proto.s3video.VideoHomeListObjects.toObject = function(includeInstance, msg) {
     uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     title: jspb.Message.getFieldWithDefault(msg, 2, ""),
     explain: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    imguuid: jspb.Message.getFieldWithDefault(msg, 4, "")
+    imguuid: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    imgext: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -2201,6 +2202,10 @@ proto.s3video.VideoHomeListObjects.deserializeBinaryFromReader = function(msg, r
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setImguuid(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setImgext(value);
       break;
     default:
       reader.skipField();
@@ -2256,6 +2261,13 @@ proto.s3video.VideoHomeListObjects.serializeBinaryToWriter = function(message, w
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getImgext();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -2331,6 +2343,24 @@ proto.s3video.VideoHomeListObjects.prototype.getImguuid = function() {
  */
 proto.s3video.VideoHomeListObjects.prototype.setImguuid = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string imgext = 5;
+ * @return {string}
+ */
+proto.s3video.VideoHomeListObjects.prototype.getImgext = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.s3video.VideoHomeListObjects} returns this
+ */
+proto.s3video.VideoHomeListObjects.prototype.setImgext = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

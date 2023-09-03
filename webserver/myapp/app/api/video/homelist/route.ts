@@ -19,6 +19,7 @@ export async function GET() {
                 title: v.getTitle(),
                 explain: v.getExplain(),
                 imguuid: v.getImguuid(),
+                imgext: v.getImgext(),
             }));
             resolve(r);
         });
