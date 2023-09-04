@@ -132,7 +132,8 @@ func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDetei
 	return &pb.VideoDeteilUpoadReplay{Uuid: video.TbnUuid.String()}, nil
 }
 
-func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
+func (s *S3VideoServer) VideoDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
+	fmt.Println("VideoDownload")
 	data, err := s.S3Interactor.VideoDownload(in.GetName())
 	if err != nil {
 		return nil, err
