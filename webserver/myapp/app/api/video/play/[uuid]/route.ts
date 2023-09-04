@@ -1,9 +1,7 @@
 //@ts-ignore
-import { NextResponse, NextRequest } from 'next/server'
-//@ts-ignore
 import * as grpc from '@grpc/grpc-js';
 import { VideotransporterClient } from '@/types/pb/s3video/s3video_grpc_pb';
-import { VideoDownloadRequest, VideoDownloadReplay } from '@/types/pb/s3video/s3video_pb';
+import { VideoDownloadRequest } from '@/types/pb/s3video/s3video_pb';
 //@ts-ignore
 const target: string = process.env.APSERVER_ADDRESS;
 const CHUNK_SIZE = 10 ** 6;
@@ -34,9 +32,8 @@ function getVideoRequest(req: Request, uuid: string) {
     if (!range) {
         return null;
     };
-    const filename: string = uuid + "." + params.get("type");
+    const filename: string = uuid;
     const videoSize: number = Number(params.get("size"));
-
     const start = Number(range.replace(/\D/g, "")); // 32324
     const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
 
@@ -56,6 +53,7 @@ function getVideoRequest(req: Request, uuid: string) {
             controller.enqueue(value);
         },
     })
+    console.log("videoStream")
     return new Response(videoStream as any, {
         status: 206,
         headers,

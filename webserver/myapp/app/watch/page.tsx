@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <video id="videoPlayer" width="650" controls autoPlay>
-        <source src={"/api/video/play/" + search + "?size=" + size + "&type=mp4"} type="video/mp4" />
+        <source src={"/api/video/play/" + search + "?size=" + size} type="video/mp4" />
       </video>
     </>
   )
