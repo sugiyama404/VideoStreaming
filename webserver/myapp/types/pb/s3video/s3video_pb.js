@@ -2147,10 +2147,11 @@ proto.s3video.VideoHomeListObjects.prototype.toObject = function(opt_includeInst
 proto.s3video.VideoHomeListObjects.toObject = function(includeInstance, msg) {
   var f, obj = {
     uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    title: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    explain: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    imguuid: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    imgext: jspb.Message.getFieldWithDefault(msg, 5, "")
+    size: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    title: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    explain: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    imguuid: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    imgext: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -2192,18 +2193,22 @@ proto.s3video.VideoHomeListObjects.deserializeBinaryFromReader = function(msg, r
       msg.setUuid(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setTitle(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setSize(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setExplain(value);
+      msg.setTitle(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setImguuid(value);
+      msg.setExplain(value);
       break;
     case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setImguuid(value);
+      break;
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setImgext(value);
       break;
@@ -2243,31 +2248,38 @@ proto.s3video.VideoHomeListObjects.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getTitle();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getSize();
+  if (f !== 0) {
+    writer.writeInt64(
       2,
       f
     );
   }
-  f = message.getExplain();
+  f = message.getTitle();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getImguuid();
+  f = message.getExplain();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getImgext();
+  f = message.getImguuid();
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getImgext();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -2293,28 +2305,28 @@ proto.s3video.VideoHomeListObjects.prototype.setUuid = function(value) {
 
 
 /**
- * optional string title = 2;
+ * optional int64 size = 2;
+ * @return {number}
+ */
+proto.s3video.VideoHomeListObjects.prototype.getSize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.s3video.VideoHomeListObjects} returns this
+ */
+proto.s3video.VideoHomeListObjects.prototype.setSize = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional string title = 3;
  * @return {string}
  */
 proto.s3video.VideoHomeListObjects.prototype.getTitle = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.s3video.VideoHomeListObjects} returns this
- */
-proto.s3video.VideoHomeListObjects.prototype.setTitle = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string explain = 3;
- * @return {string}
- */
-proto.s3video.VideoHomeListObjects.prototype.getExplain = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -2323,16 +2335,16 @@ proto.s3video.VideoHomeListObjects.prototype.getExplain = function() {
  * @param {string} value
  * @return {!proto.s3video.VideoHomeListObjects} returns this
  */
-proto.s3video.VideoHomeListObjects.prototype.setExplain = function(value) {
+proto.s3video.VideoHomeListObjects.prototype.setTitle = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string imguuid = 4;
+ * optional string explain = 4;
  * @return {string}
  */
-proto.s3video.VideoHomeListObjects.prototype.getImguuid = function() {
+proto.s3video.VideoHomeListObjects.prototype.getExplain = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -2341,16 +2353,16 @@ proto.s3video.VideoHomeListObjects.prototype.getImguuid = function() {
  * @param {string} value
  * @return {!proto.s3video.VideoHomeListObjects} returns this
  */
-proto.s3video.VideoHomeListObjects.prototype.setImguuid = function(value) {
+proto.s3video.VideoHomeListObjects.prototype.setExplain = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string imgext = 5;
+ * optional string imguuid = 5;
  * @return {string}
  */
-proto.s3video.VideoHomeListObjects.prototype.getImgext = function() {
+proto.s3video.VideoHomeListObjects.prototype.getImguuid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -2359,8 +2371,26 @@ proto.s3video.VideoHomeListObjects.prototype.getImgext = function() {
  * @param {string} value
  * @return {!proto.s3video.VideoHomeListObjects} returns this
  */
-proto.s3video.VideoHomeListObjects.prototype.setImgext = function(value) {
+proto.s3video.VideoHomeListObjects.prototype.setImguuid = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string imgext = 6;
+ * @return {string}
+ */
+proto.s3video.VideoHomeListObjects.prototype.getImgext = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.s3video.VideoHomeListObjects} returns this
+ */
+proto.s3video.VideoHomeListObjects.prototype.setImgext = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
