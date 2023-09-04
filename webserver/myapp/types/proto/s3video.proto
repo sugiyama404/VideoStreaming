@@ -66,8 +66,9 @@ message VideoHomeListReplay {
 
 message VideoHomeListObjects {
     string uuid = 1;
-    string title = 2;
-    string explain = 3;
-    string imguuid = 4;
-    string imgext = 5;
+    int64 size = 2;
+    string title = 3;
+    string explain = 4;
+    string imguuid = 5;
+    string imgext = 6;
 }

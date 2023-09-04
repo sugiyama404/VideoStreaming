@@ -260,6 +260,8 @@ export namespace VideoHomeListReplay {
 export class VideoHomeListObjects extends jspb.Message { 
     getUuid(): string;
     setUuid(value: string): VideoHomeListObjects;
+    getSize(): number;
+    setSize(value: number): VideoHomeListObjects;
     getTitle(): string;
     setTitle(value: string): VideoHomeListObjects;
     getExplain(): string;
@@ -282,6 +284,7 @@ export class VideoHomeListObjects extends jspb.Message {
 export namespace VideoHomeListObjects {
     export type AsObject = {
         uuid: string,
+        size: number,
         title: string,
         explain: string,
         imguuid: string,

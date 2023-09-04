@@ -16,6 +16,7 @@ export async function GET() {
             const vl = res.getVideohomelistobjectsList();
             const r = vl.map(v => ({
                 uuid: v.getUuid(),
+                size: v.getSize().toString(),
                 title: v.getTitle(),
                 explain: v.getExplain(),
                 imguuid: v.getImguuid(),

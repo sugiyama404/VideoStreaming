@@ -194,6 +194,7 @@ func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.Vi
 	for _, v := range videos {
 		tasks = append(tasks, &pb.VideoHomeListObjects{
 			Uuid:    v.UUID.String(),
+			Size:    int64(v.Size),
 			Title:   v.Title,
 			Explain: v.Explain,
 			Imguuid: v.TbnUuid.String(),

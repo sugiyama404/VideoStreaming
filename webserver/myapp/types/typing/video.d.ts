@@ -8,6 +8,7 @@ export interface Videolist {
 
 export interface VideoHomelist {
     uuid: string;
+    size: string;
     title: string;
     explain: string;
     imguuid: string;
