@@ -21,19 +21,22 @@ async function getVideoStream(filename: string, startbytes: number, endbytes: nu
             resolve(movie_data);
         });
     });
+    console.log("received data");
     const data = await res;
     return data;
 }
 
-function getVideoRequest(req: Request, uuid: string) {
+function getVideoRequest(req: Request) {
     const range = req.headers.get("Range");
-    const params = new URLSearchParams(new URL(req.url).search);
+    // const params = new URLSearchParams(new URL(req.url).search);
     console.log(range);
     if (!range) {
         return null;
     };
-    const filename: string = uuid;
-    const videoSize: number = Number(params.get("size"));
+    // const filename: string = uuid;
+    const filename: string = "164583b8-47d5-11ee-8cd5-0242ac170003.mp4";
+    // const videoSize: number = Number(params.get("size"));
+    const videoSize: number = 7674192;
     const start = Number(range.replace(/\D/g, "")); // 32324
     const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
 
@@ -46,22 +49,25 @@ function getVideoRequest(req: Request, uuid: string) {
         "Content-Type": "video/mp4",
     } as { [key: string]: string };
 
+    console.log(headers);
+
     const videoStream = new ReadableStream({
         type: "bytes",
         async start(controller) {
             const value = await getVideoStream(filename, start, end) as Uint8Array;
+            console.log("videoStream")
             controller.enqueue(value);
         },
     })
-    console.log("videoStream")
+
     return new Response(videoStream as any, {
         status: 206,
         headers,
     });
 }
 
-export async function GET(req: Request, { params }: { params: { uuid: string } }) {
-    const video_uuid = params.uuid;
-    return getVideoRequest(req, video_uuid);
+export async function GET(req: Request) {
+    console.log("GET")
+    return getVideoRequest(req);
 }
 
