@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <video id="videoPlayer" width="650" controls autoPlay >
+      <video id="videoPlayer" width="650" controls >
         <source src={url} type="video/mp4" />
       </video>
     </>
