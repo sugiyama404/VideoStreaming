@@ -136,6 +136,7 @@ func (s *S3VideoServer) VideoDownload(ctx context.Context, in *pb.VideoDownloadR
 	fmt.Println("VideoDownload")
 	data, err := s.S3Interactor.VideoDownload(in.GetName())
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	if data != nil {
@@ -145,9 +146,11 @@ func (s *S3VideoServer) VideoDownload(ctx context.Context, in *pb.VideoDownloadR
 			buf := make([]byte, startbytes)
 			_, err := data.Read(buf)
 			if err == io.EOF {
+				fmt.Println("EOF")
 				return &pb.VideoDownloadReplay{Data: buf}, nil
 			}
 			if err != nil {
+				fmt.Println(err)
 				return nil, err
 			}
 		}
@@ -155,9 +158,11 @@ func (s *S3VideoServer) VideoDownload(ctx context.Context, in *pb.VideoDownloadR
 		buf := make([]byte, contentlength)
 		_, err := data.Read(buf)
 		if err == io.EOF {
+			fmt.Println("EOF")
 			return &pb.VideoDownloadReplay{Data: buf}, nil
 		}
 		if err != nil {
+			fmt.Println(err)
 			return nil, err
 		}
 		return &pb.VideoDownloadReplay{Data: buf}, nil

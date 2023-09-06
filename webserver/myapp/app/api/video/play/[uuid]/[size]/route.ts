@@ -26,17 +26,14 @@ async function getVideoStream(filename: string, startbytes: number, endbytes: nu
     return data;
 }
 
-function getVideoRequest(req: Request) {
+function getVideoRequest(req: Request, uuid: string, size: number) {
     const range = req.headers.get("Range");
-    // const params = new URLSearchParams(new URL(req.url).search);
     console.log(range);
     if (!range) {
         return null;
     };
-    // const filename: string = uuid;
-    const filename: string = "164583b8-47d5-11ee-8cd5-0242ac170003.mp4";
-    // const videoSize: number = Number(params.get("size"));
-    const videoSize: number = 7674192;
+    const filename: string = uuid;
+    const videoSize: number = size;
     const start = Number(range.replace(/\D/g, "")); // 32324
     const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
 
@@ -48,8 +45,6 @@ function getVideoRequest(req: Request) {
         "Content-Length": contentLength.toString(),
         "Content-Type": "video/mp4",
     } as { [key: string]: string };
-
-    console.log(headers);
 
     const videoStream = new ReadableStream({
         type: "bytes",
@@ -66,8 +61,9 @@ function getVideoRequest(req: Request) {
     });
 }
 
-export async function GET(req: Request) {
-    console.log("GET")
-    return getVideoRequest(req);
+export async function GET(req: Request, { params }: { params: { uuid: string, size: string } }) {
+    const uuid = params.uuid;
+    const size = Number(params.size);
+    return getVideoRequest(req, uuid, size);
 }
 
