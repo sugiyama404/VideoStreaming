@@ -31,14 +31,14 @@ interface IImagetransporterService_IImageStreamUpload extends grpc.MethodDefinit
     responseSerialize: grpc.serialize<s3image_pb.Message>;
     responseDeserialize: grpc.deserialize<s3image_pb.Message>;
 }
-interface IImagetransporterService_IImageDownload extends grpc.MethodDefinition<s3image_pb.ImageDownloadRequest, s3image_pb.ImageDownloadResponse> {
+interface IImagetransporterService_IImageDownload extends grpc.MethodDefinition<s3image_pb.ImageDownloadRequest, s3image_pb.ImageDownloadReplay> {
     path: "/s3image.Imagetransporter/ImageDownload";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<s3image_pb.ImageDownloadRequest>;
     requestDeserialize: grpc.deserialize<s3image_pb.ImageDownloadRequest>;
-    responseSerialize: grpc.serialize<s3image_pb.ImageDownloadResponse>;
-    responseDeserialize: grpc.deserialize<s3image_pb.ImageDownloadResponse>;
+    responseSerialize: grpc.serialize<s3image_pb.ImageDownloadReplay>;
+    responseDeserialize: grpc.deserialize<s3image_pb.ImageDownloadReplay>;
 }
 
 export const ImagetransporterService: IImagetransporterService;
@@ -46,7 +46,7 @@ export const ImagetransporterService: IImagetransporterService;
 export interface IImagetransporterServer {
     imageUpload: grpc.handleUnaryCall<s3image_pb.ImageUpoadRequest, s3image_pb.Message>;
     imageStreamUpload: grpc.handleClientStreamingCall<s3image_pb.ImageUpoadRequest, s3image_pb.Message>;
-    imageDownload: grpc.handleUnaryCall<s3image_pb.ImageDownloadRequest, s3image_pb.ImageDownloadResponse>;
+    imageDownload: grpc.handleUnaryCall<s3image_pb.ImageDownloadRequest, s3image_pb.ImageDownloadReplay>;
 }
 
 export interface IImagetransporterClient {
@@ -57,9 +57,9 @@ export interface IImagetransporterClient {
     imageStreamUpload(metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
     imageStreamUpload(options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
     imageStreamUpload(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
-    imageDownload(request: s3image_pb.ImageDownloadRequest, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
-    imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
-    imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
+    imageDownload(request: s3image_pb.ImageDownloadRequest, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
+    imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
+    imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
 }
 
 export class ImagetransporterClient extends grpc.Client implements IImagetransporterClient {
@@ -71,7 +71,7 @@ export class ImagetransporterClient extends grpc.Client implements IImagetranspo
     public imageStreamUpload(metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
     public imageStreamUpload(options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
     public imageStreamUpload(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.Message) => void): grpc.ClientWritableStream<s3image_pb.ImageUpoadRequest>;
-    public imageDownload(request: s3image_pb.ImageDownloadRequest, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
-    public imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
-    public imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadResponse) => void): grpc.ClientUnaryCall;
+    public imageDownload(request: s3image_pb.ImageDownloadRequest, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
+    public imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
+    public imageDownload(request: s3image_pb.ImageDownloadRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: s3image_pb.ImageDownloadReplay) => void): grpc.ClientUnaryCall;
 }

@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ImagetransporterClient interface {
 	ImageUpload(ctx context.Context, in *ImageUpoadRequest, opts ...grpc.CallOption) (*Message, error)
 	ImageStreamUpload(ctx context.Context, opts ...grpc.CallOption) (Imagetransporter_ImageStreamUploadClient, error)
-	ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadResponse, error)
+	ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadReplay, error)
 }
 
 type imagetransporterClient struct {
@@ -78,8 +78,8 @@ func (x *imagetransporterImageStreamUploadClient) CloseAndRecv() (*Message, erro
 	return m, nil
 }
 
-func (c *imagetransporterClient) ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadResponse, error) {
-	out := new(ImageDownloadResponse)
+func (c *imagetransporterClient) ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (*ImageDownloadReplay, error) {
+	out := new(ImageDownloadReplay)
 	err := c.cc.Invoke(ctx, "/s3image.Imagetransporter/ImageDownload", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (c *imagetransporterClient) ImageDownload(ctx context.Context, in *ImageDow
 type ImagetransporterServer interface {
 	ImageUpload(context.Context, *ImageUpoadRequest) (*Message, error)
 	ImageStreamUpload(Imagetransporter_ImageStreamUploadServer) error
-	ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadResponse, error)
+	ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadReplay, error)
 	mustEmbedUnimplementedImagetransporterServer()
 }
 
@@ -107,7 +107,7 @@ func (UnimplementedImagetransporterServer) ImageUpload(context.Context, *ImageUp
 func (UnimplementedImagetransporterServer) ImageStreamUpload(Imagetransporter_ImageStreamUploadServer) error {
 	return status.Errorf(codes.Unimplemented, "method ImageStreamUpload not implemented")
 }
-func (UnimplementedImagetransporterServer) ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadResponse, error) {
+func (UnimplementedImagetransporterServer) ImageDownload(context.Context, *ImageDownloadRequest) (*ImageDownloadReplay, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImageDownload not implemented")
 }
 func (UnimplementedImagetransporterServer) mustEmbedUnimplementedImagetransporterServer() {}

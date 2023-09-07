@@ -20,5 +20,5 @@ export default withAuth(
 )
 
 export const config = {
-    matcher: ["/administrator", "/administrator/*", "/guest"]
+    matcher: ["/administrator", "/guest"]
 }

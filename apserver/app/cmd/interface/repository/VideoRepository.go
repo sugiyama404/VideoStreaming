@@ -18,6 +18,12 @@ func (m *VideoRepository) FindAll() ([]model.Video, error) {
 	return videos, err
 }
 
+func (m *VideoRepository) FindAllOrderByUpdatedAtDescLimit(limit int) ([]model.Video, error) {
+	videos := []model.Video{}
+	err := m.Conn.Limit(limit).Order("updated_at desc").Find(&videos).Error
+	return videos, err
+}
+
 func (m *VideoRepository) SaveByIDAndSize(id int, size int) (model.Video, error) {
 	video := model.Video{UserID: id, Size: size}
 	err := m.Conn.Create(&video).Error
@@ -25,8 +31,8 @@ func (m *VideoRepository) SaveByIDAndSize(id int, size int) (model.Video, error)
 }
 
 func (m *VideoRepository) Update(form form.VideoForm) error {
-	video := model.Video{UUID: form.UUID}
-	err := m.Conn.Model(&video).Updates(model.Video{
+	video := model.Video{}
+	err := m.Conn.Model(&video).Where("uuid = UUID_TO_BIN(?)", form.UUID).Updates(model.Video{
 		Title:        form.Title,
 		Explain:      form.Explain,
 		Tags:         form.Tags,
@@ -38,7 +44,7 @@ func (m *VideoRepository) Update(form form.VideoForm) error {
 }
 
 func (m *VideoRepository) FindByUUID(uuid uuid.UUID) (model.Video, error) {
-	video := model.Video{UUID: uuid}
-	err := m.Conn.First(&video).Error
+	video := model.Video{}
+	err := m.Conn.First(&video, "uuid = UUID_TO_BIN(?)", uuid).Error
 	return video, err
 }

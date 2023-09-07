@@ -132,9 +132,11 @@ func (s *S3VideoServer) VideoDeteilUpload(ctx context.Context, in *pb.VideoDetei
 	return &pb.VideoDeteilUpoadReplay{Uuid: video.TbnUuid.String()}, nil
 }
 
-func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
+func (s *S3VideoServer) VideoDownload(ctx context.Context, in *pb.VideoDownloadRequest) (*pb.VideoDownloadReplay, error) {
+	fmt.Println("VideoDownload")
 	data, err := s.S3Interactor.VideoDownload(in.GetName())
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	if data != nil {
@@ -144,9 +146,11 @@ func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDow
 			buf := make([]byte, startbytes)
 			_, err := data.Read(buf)
 			if err == io.EOF {
+				fmt.Println("EOF")
 				return &pb.VideoDownloadReplay{Data: buf}, nil
 			}
 			if err != nil {
+				fmt.Println(err)
 				return nil, err
 			}
 		}
@@ -154,9 +158,11 @@ func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDow
 		buf := make([]byte, contentlength)
 		_, err := data.Read(buf)
 		if err == io.EOF {
+			fmt.Println("EOF")
 			return &pb.VideoDownloadReplay{Data: buf}, nil
 		}
 		if err != nil {
+			fmt.Println(err)
 			return nil, err
 		}
 		return &pb.VideoDownloadReplay{Data: buf}, nil
@@ -165,29 +171,41 @@ func (s *S3VideoServer) VideoStreamDownload(ctx context.Context, in *pb.VideoDow
 }
 
 func (s *S3VideoServer) VideoList(ctx context.Context, in *pb.Empty) (*pb.VideoListReplay, error) {
-	video, err := s.Interactor.Show()
+	videos, err := s.Interactor.Show()
 	if err != nil {
 		return nil, err
 	}
 
 	tasks := make([]*pb.VideoListObjects, 0)
-	for _, v := range video {
-		arr := strings.Split(v.Tags, ",")
-		tagsobjects := make([]*pb.TagsObjects, 0)
-		for _, vv := range arr {
-			tagsobjects = append(tagsobjects, &pb.TagsObjects{
-				Tags: vv,
-			})
-		}
+	for _, v := range videos {
 		tasks = append(tasks, &pb.VideoListObjects{
-			Id:          int64(v.ID),
-			Title:       v.Title,
-			Category:    v.Category,
-			Tagsobjects: tagsobjects,
-			Explain:     v.Explain,
+			Id:       int64(v.ID),
+			Title:    v.Title,
+			Category: v.Category,
+			Tags:     strings.Split(v.Tags, ","),
+			Explain:  v.Explain,
 		})
 
 	}
 	return &pb.VideoListReplay{Videolistobject: tasks}, nil
+}
 
+func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.VideoHomeListReplay, error) {
+	videos, err := s.Interactor.ShowHome(6)
+	if err != nil {
+		return nil, err
+	}
+
+	tasks := make([]*pb.VideoHomeListObjects, 0)
+	for _, v := range videos {
+		tasks = append(tasks, &pb.VideoHomeListObjects{
+			Uuid:    v.UUID.String(),
+			Size:    int64(v.Size),
+			Title:   v.Title,
+			Explain: v.Explain,
+			Imguuid: v.TbnUuid.String(),
+			Imgext:  v.TbnExtension,
+		})
+	}
+	return &pb.VideoHomeListReplay{Videohomelistobjects: tasks}, nil
 }

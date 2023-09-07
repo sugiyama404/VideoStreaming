@@ -7,7 +7,7 @@ option go_package = "./pb/s3image";
 service Imagetransporter {
     rpc ImageUpload (ImageUpoadRequest) returns (Message) {}
     rpc ImageStreamUpload (stream ImageUpoadRequest) returns (Message) {}
-    rpc ImageDownload (ImageDownloadRequest) returns (ImageDownloadResponse) {}
+    rpc ImageDownload (ImageDownloadRequest) returns (ImageDownloadReplay) {}
 }
 
 message ImageUpoadRequest {
@@ -21,8 +21,11 @@ message Message {
 
 message ImageDownloadRequest {
     string name = 1;
+    bool isresize = 2;
+    int64 rewidth = 3;
+    int64 reheight = 4;
 }
 
-message ImageDownloadResponse {
+message ImageDownloadReplay {
     bytes image = 1;
 }
