@@ -54,6 +54,12 @@ export namespace Message {
 export class ImageDownloadRequest extends jspb.Message { 
     getName(): string;
     setName(value: string): ImageDownloadRequest;
+    getIsresize(): boolean;
+    setIsresize(value: boolean): ImageDownloadRequest;
+    getRewidth(): number;
+    setRewidth(value: number): ImageDownloadRequest;
+    getReheight(): number;
+    setReheight(value: number): ImageDownloadRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ImageDownloadRequest.AsObject;
@@ -68,26 +74,29 @@ export class ImageDownloadRequest extends jspb.Message {
 export namespace ImageDownloadRequest {
     export type AsObject = {
         name: string,
+        isresize: boolean,
+        rewidth: number,
+        reheight: number,
     }
 }
 
-export class ImageDownloadResponse extends jspb.Message { 
+export class ImageDownloadReplay extends jspb.Message { 
     getImage(): Uint8Array | string;
     getImage_asU8(): Uint8Array;
     getImage_asB64(): string;
-    setImage(value: Uint8Array | string): ImageDownloadResponse;
+    setImage(value: Uint8Array | string): ImageDownloadReplay;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ImageDownloadResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: ImageDownloadResponse): ImageDownloadResponse.AsObject;
+    toObject(includeInstance?: boolean): ImageDownloadReplay.AsObject;
+    static toObject(includeInstance: boolean, msg: ImageDownloadReplay): ImageDownloadReplay.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ImageDownloadResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ImageDownloadResponse;
-    static deserializeBinaryFromReader(message: ImageDownloadResponse, reader: jspb.BinaryReader): ImageDownloadResponse;
+    static serializeBinaryToWriter(message: ImageDownloadReplay, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ImageDownloadReplay;
+    static deserializeBinaryFromReader(message: ImageDownloadReplay, reader: jspb.BinaryReader): ImageDownloadReplay;
 }
 
-export namespace ImageDownloadResponse {
+export namespace ImageDownloadReplay {
     export type AsObject = {
         image: Uint8Array | string,
     }

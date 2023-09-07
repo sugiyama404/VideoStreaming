@@ -21,8 +21,8 @@ var global = (function() {
   return Function('return this')();
 }.call(null));
 
+goog.exportSymbol('proto.s3image.ImageDownloadReplay', null, global);
 goog.exportSymbol('proto.s3image.ImageDownloadRequest', null, global);
-goog.exportSymbol('proto.s3image.ImageDownloadResponse', null, global);
 goog.exportSymbol('proto.s3image.ImageUpoadRequest', null, global);
 goog.exportSymbol('proto.s3image.Message', null, global);
 /**
@@ -98,16 +98,16 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.s3image.ImageDownloadResponse = function(opt_data) {
+proto.s3image.ImageDownloadReplay = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.s3image.ImageDownloadResponse, jspb.Message);
+goog.inherits(proto.s3image.ImageDownloadReplay, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   /**
    * @public
    * @override
    */
-  proto.s3image.ImageDownloadResponse.displayName = 'proto.s3image.ImageDownloadResponse';
+  proto.s3image.ImageDownloadReplay.displayName = 'proto.s3image.ImageDownloadReplay';
 }
 
 
@@ -455,7 +455,10 @@ proto.s3image.ImageDownloadRequest.prototype.toObject = function(opt_includeInst
  */
 proto.s3image.ImageDownloadRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    isresize: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    rewidth: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    reheight: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -496,6 +499,18 @@ proto.s3image.ImageDownloadRequest.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsresize(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setRewidth(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setReheight(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -532,6 +547,27 @@ proto.s3image.ImageDownloadRequest.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getIsresize();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getRewidth();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
+      f
+    );
+  }
+  f = message.getReheight();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -553,6 +589,60 @@ proto.s3image.ImageDownloadRequest.prototype.setName = function(value) {
 };
 
 
+/**
+ * optional bool isresize = 2;
+ * @return {boolean}
+ */
+proto.s3image.ImageDownloadRequest.prototype.getIsresize = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.s3image.ImageDownloadRequest} returns this
+ */
+proto.s3image.ImageDownloadRequest.prototype.setIsresize = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional int64 rewidth = 3;
+ * @return {number}
+ */
+proto.s3image.ImageDownloadRequest.prototype.getRewidth = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.s3image.ImageDownloadRequest} returns this
+ */
+proto.s3image.ImageDownloadRequest.prototype.setRewidth = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int64 reheight = 4;
+ * @return {number}
+ */
+proto.s3image.ImageDownloadRequest.prototype.getReheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.s3image.ImageDownloadRequest} returns this
+ */
+proto.s3image.ImageDownloadRequest.prototype.setReheight = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
 
 
 
@@ -569,8 +659,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.s3image.ImageDownloadResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.s3image.ImageDownloadResponse.toObject(opt_includeInstance, this);
+proto.s3image.ImageDownloadReplay.prototype.toObject = function(opt_includeInstance) {
+  return proto.s3image.ImageDownloadReplay.toObject(opt_includeInstance, this);
 };
 
 
@@ -579,11 +669,11 @@ proto.s3image.ImageDownloadResponse.prototype.toObject = function(opt_includeIns
  * @param {boolean|undefined} includeInstance Deprecated. Whether to include
  *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.s3image.ImageDownloadResponse} msg The msg instance to transform.
+ * @param {!proto.s3image.ImageDownloadReplay} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.s3image.ImageDownloadResponse.toObject = function(includeInstance, msg) {
+proto.s3image.ImageDownloadReplay.toObject = function(includeInstance, msg) {
   var f, obj = {
     image: msg.getImage_asB64()
   };
@@ -599,23 +689,23 @@ proto.s3image.ImageDownloadResponse.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.s3image.ImageDownloadResponse}
+ * @return {!proto.s3image.ImageDownloadReplay}
  */
-proto.s3image.ImageDownloadResponse.deserializeBinary = function(bytes) {
+proto.s3image.ImageDownloadReplay.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.s3image.ImageDownloadResponse;
-  return proto.s3image.ImageDownloadResponse.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.s3image.ImageDownloadReplay;
+  return proto.s3image.ImageDownloadReplay.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.s3image.ImageDownloadResponse} msg The message object to deserialize into.
+ * @param {!proto.s3image.ImageDownloadReplay} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.s3image.ImageDownloadResponse}
+ * @return {!proto.s3image.ImageDownloadReplay}
  */
-proto.s3image.ImageDownloadResponse.deserializeBinaryFromReader = function(msg, reader) {
+proto.s3image.ImageDownloadReplay.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -639,9 +729,9 @@ proto.s3image.ImageDownloadResponse.deserializeBinaryFromReader = function(msg, 
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.s3image.ImageDownloadResponse.prototype.serializeBinary = function() {
+proto.s3image.ImageDownloadReplay.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.s3image.ImageDownloadResponse.serializeBinaryToWriter(this, writer);
+  proto.s3image.ImageDownloadReplay.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -649,11 +739,11 @@ proto.s3image.ImageDownloadResponse.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.s3image.ImageDownloadResponse} message
+ * @param {!proto.s3image.ImageDownloadReplay} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.s3image.ImageDownloadResponse.serializeBinaryToWriter = function(message, writer) {
+proto.s3image.ImageDownloadReplay.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getImage_asU8();
   if (f.length > 0) {
@@ -669,7 +759,7 @@ proto.s3image.ImageDownloadResponse.serializeBinaryToWriter = function(message, 
  * optional bytes image = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.s3image.ImageDownloadResponse.prototype.getImage = function() {
+proto.s3image.ImageDownloadReplay.prototype.getImage = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -679,7 +769,7 @@ proto.s3image.ImageDownloadResponse.prototype.getImage = function() {
  * This is a type-conversion wrapper around `getImage()`
  * @return {string}
  */
-proto.s3image.ImageDownloadResponse.prototype.getImage_asB64 = function() {
+proto.s3image.ImageDownloadReplay.prototype.getImage_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
       this.getImage()));
 };
@@ -692,7 +782,7 @@ proto.s3image.ImageDownloadResponse.prototype.getImage_asB64 = function() {
  * This is a type-conversion wrapper around `getImage()`
  * @return {!Uint8Array}
  */
-proto.s3image.ImageDownloadResponse.prototype.getImage_asU8 = function() {
+proto.s3image.ImageDownloadReplay.prototype.getImage_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
       this.getImage()));
 };
@@ -700,9 +790,9 @@ proto.s3image.ImageDownloadResponse.prototype.getImage_asU8 = function() {
 
 /**
  * @param {!(string|Uint8Array)} value
- * @return {!proto.s3image.ImageDownloadResponse} returns this
+ * @return {!proto.s3image.ImageDownloadReplay} returns this
  */
-proto.s3image.ImageDownloadResponse.prototype.setImage = function(value) {
+proto.s3image.ImageDownloadReplay.prototype.setImage = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 

@@ -59,6 +59,17 @@ function deserialize_s3video_VideoDownloadRequest(buffer_arg) {
   return s3video_pb.VideoDownloadRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_s3video_VideoHomeListReplay(arg) {
+  if (!(arg instanceof s3video_pb.VideoHomeListReplay)) {
+    throw new Error('Expected argument of type s3video.VideoHomeListReplay');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_VideoHomeListReplay(buffer_arg) {
+  return s3video_pb.VideoHomeListReplay.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_s3video_VideoListReplay(arg) {
   if (!(arg instanceof s3video_pb.VideoListReplay)) {
     throw new Error('Expected argument of type s3video.VideoListReplay');
@@ -137,6 +148,17 @@ var VideotransporterService = exports.VideotransporterService = {
     requestDeserialize: deserialize_s3video_Empty,
     responseSerialize: serialize_s3video_VideoListReplay,
     responseDeserialize: deserialize_s3video_VideoListReplay,
+  },
+  videoHomeList: {
+    path: '/s3video.Videotransporter/VideoHomeList',
+    requestStream: false,
+    responseStream: false,
+    requestType: s3video_pb.Empty,
+    responseType: s3video_pb.VideoHomeListReplay,
+    requestSerialize: serialize_s3video_Empty,
+    requestDeserialize: deserialize_s3video_Empty,
+    responseSerialize: serialize_s3video_VideoHomeListReplay,
+    responseDeserialize: deserialize_s3video_VideoHomeListReplay,
   },
 };
 

@@ -208,10 +208,10 @@ export class VideoListObjects extends jspb.Message {
     setTitle(value: string): VideoListObjects;
     getCategory(): string;
     setCategory(value: string): VideoListObjects;
-    clearTagsobjectsList(): void;
-    getTagsobjectsList(): Array<TagsObjects>;
-    setTagsobjectsList(value: Array<TagsObjects>): VideoListObjects;
-    addTagsobjects(value?: TagsObjects, index?: number): TagsObjects;
+    clearTagsList(): void;
+    getTagsList(): Array<string>;
+    setTagsList(value: Array<string>): VideoListObjects;
+    addTags(value: string, index?: number): string;
     getExplain(): string;
     setExplain(value: string): VideoListObjects;
 
@@ -230,27 +230,64 @@ export namespace VideoListObjects {
         id: number,
         title: string,
         category: string,
-        tagsobjectsList: Array<TagsObjects.AsObject>,
+        tagsList: Array<string>,
         explain: string,
     }
 }
 
-export class TagsObjects extends jspb.Message { 
-    getTags(): string;
-    setTags(value: string): TagsObjects;
+export class VideoHomeListReplay extends jspb.Message { 
+    clearVideohomelistobjectsList(): void;
+    getVideohomelistobjectsList(): Array<VideoHomeListObjects>;
+    setVideohomelistobjectsList(value: Array<VideoHomeListObjects>): VideoHomeListReplay;
+    addVideohomelistobjects(value?: VideoHomeListObjects, index?: number): VideoHomeListObjects;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): TagsObjects.AsObject;
-    static toObject(includeInstance: boolean, msg: TagsObjects): TagsObjects.AsObject;
+    toObject(includeInstance?: boolean): VideoHomeListReplay.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoHomeListReplay): VideoHomeListReplay.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: TagsObjects, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): TagsObjects;
-    static deserializeBinaryFromReader(message: TagsObjects, reader: jspb.BinaryReader): TagsObjects;
+    static serializeBinaryToWriter(message: VideoHomeListReplay, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoHomeListReplay;
+    static deserializeBinaryFromReader(message: VideoHomeListReplay, reader: jspb.BinaryReader): VideoHomeListReplay;
 }
 
-export namespace TagsObjects {
+export namespace VideoHomeListReplay {
     export type AsObject = {
-        tags: string,
+        videohomelistobjectsList: Array<VideoHomeListObjects.AsObject>,
+    }
+}
+
+export class VideoHomeListObjects extends jspb.Message { 
+    getUuid(): string;
+    setUuid(value: string): VideoHomeListObjects;
+    getSize(): number;
+    setSize(value: number): VideoHomeListObjects;
+    getTitle(): string;
+    setTitle(value: string): VideoHomeListObjects;
+    getExplain(): string;
+    setExplain(value: string): VideoHomeListObjects;
+    getImguuid(): string;
+    setImguuid(value: string): VideoHomeListObjects;
+    getImgext(): string;
+    setImgext(value: string): VideoHomeListObjects;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoHomeListObjects.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoHomeListObjects): VideoHomeListObjects.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoHomeListObjects, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoHomeListObjects;
+    static deserializeBinaryFromReader(message: VideoHomeListObjects, reader: jspb.BinaryReader): VideoHomeListObjects;
+}
+
+export namespace VideoHomeListObjects {
+    export type AsObject = {
+        uuid: string,
+        size: number,
+        title: string,
+        explain: string,
+        imguuid: string,
+        imgext: string,
     }
 }

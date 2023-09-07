@@ -4,6 +4,17 @@
 var grpc = require('@grpc/grpc-js');
 var s3image_pb = require('./s3image_pb.js');
 
+function serialize_s3image_ImageDownloadReplay(arg) {
+  if (!(arg instanceof s3image_pb.ImageDownloadReplay)) {
+    throw new Error('Expected argument of type s3image.ImageDownloadReplay');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3image_ImageDownloadReplay(buffer_arg) {
+  return s3image_pb.ImageDownloadReplay.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_s3image_ImageDownloadRequest(arg) {
   if (!(arg instanceof s3image_pb.ImageDownloadRequest)) {
     throw new Error('Expected argument of type s3image.ImageDownloadRequest');
@@ -13,17 +24,6 @@ function serialize_s3image_ImageDownloadRequest(arg) {
 
 function deserialize_s3image_ImageDownloadRequest(buffer_arg) {
   return s3image_pb.ImageDownloadRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_s3image_ImageDownloadResponse(arg) {
-  if (!(arg instanceof s3image_pb.ImageDownloadResponse)) {
-    throw new Error('Expected argument of type s3image.ImageDownloadResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_s3image_ImageDownloadResponse(buffer_arg) {
-  return s3image_pb.ImageDownloadResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_s3image_ImageUpoadRequest(arg) {
@@ -77,11 +77,11 @@ var ImagetransporterService = exports.ImagetransporterService = {
     requestStream: false,
     responseStream: false,
     requestType: s3image_pb.ImageDownloadRequest,
-    responseType: s3image_pb.ImageDownloadResponse,
+    responseType: s3image_pb.ImageDownloadReplay,
     requestSerialize: serialize_s3image_ImageDownloadRequest,
     requestDeserialize: deserialize_s3image_ImageDownloadRequest,
-    responseSerialize: serialize_s3image_ImageDownloadResponse,
-    responseDeserialize: deserialize_s3image_ImageDownloadResponse,
+    responseSerialize: serialize_s3image_ImageDownloadReplay,
+    responseDeserialize: deserialize_s3image_ImageDownloadReplay,
   },
 };
 
