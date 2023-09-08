@@ -211,7 +211,12 @@ func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.Vi
 }
 
 func (s *S3VideoServer) VideoOne(ctx context.Context, in *pb.VideoOneRequest) (*pb.VideoOneReplay, error) {
-	video, err := s.Interactor.GetByUUID(uuid.MustParse(in.GetUuid()))
+	uuid, err := uuid.Parse(in.GetUuid())
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	video, err := s.Interactor.GetByUUID(uuid)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err

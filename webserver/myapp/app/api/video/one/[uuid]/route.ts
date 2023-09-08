@@ -14,7 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { uuid: st
     const req = new VideoOneRequest();
     if (!!uuid) req.setUuid(uuid);
     const res = await new Promise<Videolist>((resolve, reject) => {
-        client.videoOne(req, (res: VideoOneReplay, err) => {
+        client.videoOne(req, (err: Error, res: VideoOneReplay) => {
             if (err) reject(err);
             resolve({
                 id: res.getId(),
