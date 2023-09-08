@@ -16,6 +16,7 @@ docker compose up
 ```
 email: kanri@gmail.jp
 pass: adminkanri
+http://localhost/administrator
 ```
 
 3. Enjoy watching the video!

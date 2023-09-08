@@ -209,3 +209,19 @@ func (s *S3VideoServer) VideoHomeList(ctx context.Context, in *pb.Empty) (*pb.Vi
 	}
 	return &pb.VideoHomeListReplay{Videohomelistobjects: tasks}, nil
 }
+
+func (s *S3VideoServer) VideoOne(ctx context.Context, in *pb.VideoOneRequest) (*pb.VideoOneReplay, error) {
+	video, err := s.Interactor.GetByUUID(uuid.MustParse(in.GetUuid()))
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &pb.VideoOneReplay{
+		Id:       int64(video.ID),
+		Title:    video.Title,
+		Category: video.Category,
+		Tags:     strings.Split(video.Tags, ","),
+		Explain:  video.Explain,
+	}, nil
+}

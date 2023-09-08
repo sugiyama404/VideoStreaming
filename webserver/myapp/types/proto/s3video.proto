@@ -8,7 +8,7 @@ service Videotransporter {
     rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
     rpc VideoList (Empty) returns (VideoListReplay) {}
     rpc VideoHomeList (Empty) returns (VideoHomeListReplay) {}
-
+    rpc VideoOne (VideoOneRequest) returns (VideoOneReplay) {}
 }
 
 message VideoUpoadRequest {
@@ -71,4 +71,16 @@ message VideoHomeListObjects {
     string explain = 4;
     string imguuid = 5;
     string imgext = 6;
+}
+
+message VideoOneRequest {
+    string uuid = 1;
+}
+
+message VideoOneReplay {
+    int64 id = 1;
+    string title = 2;
+    string category = 3;
+    repeated string tags = 4;
+    string explain = 5;
 }
