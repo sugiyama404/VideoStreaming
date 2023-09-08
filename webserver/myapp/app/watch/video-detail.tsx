@@ -12,21 +12,26 @@ export default function VideoDetail() {
 
   const searchParams = useSearchParams();
   const name = searchParams.get('v');
-  const endpoint = `/api/video/one/${name}`;
+  const nameSplit = name.split('.');
+  const endpoint = `/api/video/one/${nameSplit[0]}`;
 
   useEffect(() => {
     fetch(endpoint, { cache: "no-store", })
       .then((res) => res.json())
       .then((data: Videolist) => {
-        setData(data)
+        setData(data);
       })
   }, [])
 
 
   return (
     <>
-      <h3 className="uk-card-title">{data}</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+      <h3 className="uk-card-title">{data.title}</h3>
+      <p>カテゴリー: {data.category}</p>
+      <p>タグ: {data.tags.join(',')}</p>
+      <hr></hr>
+      <h3>概要</h3>
+      <p>{data.explain}</p>
     </>
   )
 }
