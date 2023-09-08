@@ -81,6 +81,28 @@ function deserialize_s3video_VideoListReplay(buffer_arg) {
   return s3video_pb.VideoListReplay.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_s3video_VideoOneReplay(arg) {
+  if (!(arg instanceof s3video_pb.VideoOneReplay)) {
+    throw new Error('Expected argument of type s3video.VideoOneReplay');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_VideoOneReplay(buffer_arg) {
+  return s3video_pb.VideoOneReplay.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_s3video_VideoOneRequest(arg) {
+  if (!(arg instanceof s3video_pb.VideoOneRequest)) {
+    throw new Error('Expected argument of type s3video.VideoOneRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_s3video_VideoOneRequest(buffer_arg) {
+  return s3video_pb.VideoOneRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_s3video_VideoUploadReplay(arg) {
   if (!(arg instanceof s3video_pb.VideoUploadReplay)) {
     throw new Error('Expected argument of type s3video.VideoUploadReplay');
@@ -159,6 +181,17 @@ var VideotransporterService = exports.VideotransporterService = {
     requestDeserialize: deserialize_s3video_Empty,
     responseSerialize: serialize_s3video_VideoHomeListReplay,
     responseDeserialize: deserialize_s3video_VideoHomeListReplay,
+  },
+  videoOne: {
+    path: '/s3video.Videotransporter/VideoOne',
+    requestStream: false,
+    responseStream: false,
+    requestType: s3video_pb.VideoOneRequest,
+    responseType: s3video_pb.VideoOneReplay,
+    requestSerialize: serialize_s3video_VideoOneRequest,
+    requestDeserialize: deserialize_s3video_VideoOneRequest,
+    responseSerialize: serialize_s3video_VideoOneReplay,
+    responseDeserialize: deserialize_s3video_VideoOneReplay,
   },
 };
 
