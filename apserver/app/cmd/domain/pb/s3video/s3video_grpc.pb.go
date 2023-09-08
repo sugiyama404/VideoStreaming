@@ -27,6 +27,7 @@ type VideotransporterClient interface {
 	VideoDownload(ctx context.Context, in *VideoDownloadRequest, opts ...grpc.CallOption) (*VideoDownloadReplay, error)
 	VideoList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*VideoListReplay, error)
 	VideoHomeList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*VideoHomeListReplay, error)
+	VideoOne(ctx context.Context, in *VideoOneRequest, opts ...grpc.CallOption) (*VideoOneReplay, error)
 }
 
 type videotransporterClient struct {
@@ -107,6 +108,15 @@ func (c *videotransporterClient) VideoHomeList(ctx context.Context, in *Empty, o
 	return out, nil
 }
 
+func (c *videotransporterClient) VideoOne(ctx context.Context, in *VideoOneRequest, opts ...grpc.CallOption) (*VideoOneReplay, error) {
+	out := new(VideoOneReplay)
+	err := c.cc.Invoke(ctx, "/s3video.Videotransporter/VideoOne", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VideotransporterServer is the server API for Videotransporter service.
 // All implementations must embed UnimplementedVideotransporterServer
 // for forward compatibility
@@ -116,6 +126,7 @@ type VideotransporterServer interface {
 	VideoDownload(context.Context, *VideoDownloadRequest) (*VideoDownloadReplay, error)
 	VideoList(context.Context, *Empty) (*VideoListReplay, error)
 	VideoHomeList(context.Context, *Empty) (*VideoHomeListReplay, error)
+	VideoOne(context.Context, *VideoOneRequest) (*VideoOneReplay, error)
 	mustEmbedUnimplementedVideotransporterServer()
 }
 
@@ -137,6 +148,9 @@ func (UnimplementedVideotransporterServer) VideoList(context.Context, *Empty) (*
 }
 func (UnimplementedVideotransporterServer) VideoHomeList(context.Context, *Empty) (*VideoHomeListReplay, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VideoHomeList not implemented")
+}
+func (UnimplementedVideotransporterServer) VideoOne(context.Context, *VideoOneRequest) (*VideoOneReplay, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VideoOne not implemented")
 }
 func (UnimplementedVideotransporterServer) mustEmbedUnimplementedVideotransporterServer() {}
 
@@ -249,6 +263,24 @@ func _Videotransporter_VideoHomeList_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Videotransporter_VideoOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VideoOneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VideotransporterServer).VideoOne(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/s3video.Videotransporter/VideoOne",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VideotransporterServer).VideoOne(ctx, req.(*VideoOneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Videotransporter_ServiceDesc is the grpc.ServiceDesc for Videotransporter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -271,6 +303,10 @@ var Videotransporter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VideoHomeList",
 			Handler:    _Videotransporter_VideoHomeList_Handler,
+		},
+		{
+			MethodName: "VideoOne",
+			Handler:    _Videotransporter_VideoOne_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -291,3 +291,57 @@ export namespace VideoHomeListObjects {
         imgext: string,
     }
 }
+
+export class VideoOneRequest extends jspb.Message { 
+    getUuid(): string;
+    setUuid(value: string): VideoOneRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoOneRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoOneRequest): VideoOneRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoOneRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoOneRequest;
+    static deserializeBinaryFromReader(message: VideoOneRequest, reader: jspb.BinaryReader): VideoOneRequest;
+}
+
+export namespace VideoOneRequest {
+    export type AsObject = {
+        uuid: string,
+    }
+}
+
+export class VideoOneReplay extends jspb.Message { 
+    getId(): number;
+    setId(value: number): VideoOneReplay;
+    getTitle(): string;
+    setTitle(value: string): VideoOneReplay;
+    getCategory(): string;
+    setCategory(value: string): VideoOneReplay;
+    clearTagsList(): void;
+    getTagsList(): Array<string>;
+    setTagsList(value: Array<string>): VideoOneReplay;
+    addTags(value: string, index?: number): string;
+    getExplain(): string;
+    setExplain(value: string): VideoOneReplay;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoOneReplay.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoOneReplay): VideoOneReplay.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoOneReplay, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoOneReplay;
+    static deserializeBinaryFromReader(message: VideoOneReplay, reader: jspb.BinaryReader): VideoOneReplay;
+}
+
+export namespace VideoOneReplay {
+    export type AsObject = {
+        id: number,
+        title: string,
+        category: string,
+        tagsList: Array<string>,
+        explain: string,
+    }
+}

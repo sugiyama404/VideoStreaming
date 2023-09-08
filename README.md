@@ -4,10 +4,20 @@ I have created a web application for video streaming services. This application 
 
 ## Installation for docker
 
-To begin, simple environmental constants must first be set for each service. Execute the following script.
+1. To begin, simple environmental constants must first be set for each service. Execute the following script.
 
 ```bash
 bin/start_first_docker
 docker compose up
 ```
+
+2. Register at least 6 videos on the Admin page. The administrator account is automatically generated.
+
+```
+email: kanri@gmail.jp
+pass: adminkanri
+http://localhost/administrator
+```
+
+3. Enjoy watching the video!
 
