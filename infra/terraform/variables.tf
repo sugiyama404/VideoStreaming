@@ -1,11 +1,16 @@
 variable "app_name" {
   type    = string
-  default = "node-web-app"
+  default = "video_stream"
 }
 
-variable "image_name" {
+variable "image_name1" {
   type    = string
-  default = "pyapp"
+  default = "apserver"
+}
+
+variable "image_name2" {
+  type    = string
+  default = "webserver"
 }
 
 variable "cluster_name" {
