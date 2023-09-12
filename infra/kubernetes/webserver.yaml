@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pyapp
+  name: webserver
   labels:
-    app: pyapp
+    app: webserver
 spec:
   containers:
-    - image: 280233053143.dkr.ecr.ap-northeast-1.amazonaws.com/pyapp:latest
-      name: pyapp
+    - image: 280233053143.dkr.ecr.ap-northeast-1.amazonaws.com/webserver:latest
+      name: webserver
       env:
         - name: HOST
           value: "rust-mysql.cy7vxeh7sdlz.ap-northeast-1.rds.amazonaws.com"
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pyapp
+  name: webserver
 spec:
   ports:
     - name: 80-80
@@ -46,5 +46,5 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    app: pyapp
+    app: webserver
   type: NodePort

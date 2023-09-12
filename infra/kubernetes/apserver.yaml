@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apserver
+  labels:
+    app: apserver
+spec:
+  containers:
+    - image: 280233053143.dkr.ecr.ap-northeast-1.amazonaws.com/apserver:latest
+      name: apserver
+      env:
+        - name: HOST
+          value: "rust-mysql.cy7vxeh7sdlz.ap-northeast-1.rds.amazonaws.com"
+        - name: DBNAME
+          value: "todoproject"
+        - name: USERNAME
+          value: "rustrust"
+        - name: PASSWORD
+          value: "rustrust"
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apserver
+spec:
+  ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: apserver
+  type: NodePort
