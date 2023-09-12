@@ -10,7 +10,7 @@ function docker_node_runner() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
   docker_node_runner "${cwd}"
 
 }

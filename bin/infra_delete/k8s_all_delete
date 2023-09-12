@@ -31,7 +31,7 @@ function all_delete() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/../infra/kubernetes" && pwd)"
+  cwd="$(cd "$(dirname "$0")/../../infra/kubernetes" && pwd)"
   all_delete "${cwd}"
 }
 

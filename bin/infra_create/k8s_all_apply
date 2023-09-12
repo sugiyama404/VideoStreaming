@@ -32,7 +32,7 @@ function all_apply() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/../infra/kubernetes" && pwd)"
+  cwd="$(cd "$(dirname "$0")/../../infra/kubernetes" && pwd)"
   all_apply "${cwd}"
 }
 

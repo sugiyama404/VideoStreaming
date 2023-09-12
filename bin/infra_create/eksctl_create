@@ -11,7 +11,7 @@ function all_apply() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
   all_apply "${cwd}"
 }
 

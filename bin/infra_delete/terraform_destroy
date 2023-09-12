@@ -12,7 +12,7 @@ function terraform_destroy() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
   terraform_destroy "${cwd}"
 }
 
