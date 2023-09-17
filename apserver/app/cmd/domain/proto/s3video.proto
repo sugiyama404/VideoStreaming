@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package s3video;
+
+option go_package = "./pb/s3video";
+
+service Videotransporter {
+    rpc VideoUpload (stream VideoUpoadRequest) returns (VideoUploadReplay) {}
+    rpc VideoDeteilUpload (VideoDeteilUpoadRequest) returns (VideoDeteilUpoadReplay) {}
+    rpc VideoDownload (VideoDownloadRequest) returns (VideoDownloadReplay) {}
+    rpc VideoList (Empty) returns (VideoListReplay) {}
+    rpc VideoHomeList (Empty) returns (VideoHomeListReplay) {}
+    rpc VideoOne (VideoOneRequest) returns (VideoOneReplay) {}
+}
+
+message VideoUpoadRequest {
+    bytes data = 1;
+    int64 size = 2;
+    int64 id = 3;
+}
+
+message VideoUploadReplay {
+    string newname = 1;
+}
+
+
+message VideoDeteilUpoadRequest {
+    string video_uuid = 1;
+    string title = 2;
+    string explain = 3;
+    repeated string tags = 4;
+    string category = 5;
+    string extension = 6;
+    bool oversize = 7;
+}
+
+message VideoDeteilUpoadReplay {
+    string uuid = 1;
+}
+
+message VideoDownloadRequest {
+    string name = 1;
+    int64 startbytes = 2;
+    int64 endbytes = 3;
+}
+
+message VideoDownloadReplay {
+    bytes data = 1;
+}
+
+message Empty {
+}
+
+message VideoListReplay {
+    repeated VideoListObjects videolistobject = 1;
+}
+
+message VideoListObjects {
+    int64 id = 1;
+    string title = 2;
+    string category = 3;
+    repeated string tags = 4;
+    string explain = 5;
+}
+
+message VideoHomeListReplay {
+    repeated VideoHomeListObjects videohomelistobjects = 1;
+}
+
+message VideoHomeListObjects {
+    string uuid = 1;
+    int64 size = 2;
+    string title = 3;
+    string explain = 4;
+    string imguuid = 5;
+    string imgext = 6;
+}
+
+message VideoOneRequest {
+    string uuid = 1;
+}
+
+message VideoOneReplay {
+    int64 id = 1;
+    string title = 2;
+    string category = 3;
+    repeated string tags = 4;
+    string explain = 5;
+}
