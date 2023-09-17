@@ -1,0 +1,37 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-study-cluster
+  region: ap-northeast-1
+  version: "1.23"
+vpc:
+  id: "vpc-0c6e20eeb53226421"
+  subnets:
+    private:
+      ap-northeast-1a:
+        id: "subnet-059deda9d581a9f59"
+      ap-northeast-1c:
+        id: "subnet-01184558a4b431099"
+    public:
+      ap-northeast-1a:
+        id: "subnet-0f10dc9f9eba19745"
+      ap-northeast-1c:
+        id: "subnet-0077cde123263eb88"
+nodeGroups:
+  - name: eks-study-ng
+    instanceType: t3.small
+    desiredCapacity: 1
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        awsLoadBalancerController: true
+        cloudWatch: true
+        ebs: true
+      attachPolicy:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - "s3:GetObject"
+            Resource: "arn:aws:s3:::example-bucket/*"

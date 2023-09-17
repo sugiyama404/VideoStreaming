@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function ts-gen-service() {
+  local cwd="$1"
+  cd "${cwd}"
+  NODE_PROTOC="grpc_tools_node_protoc"
+  PROTOC_GEN_TS_PATH="/app/myapp/node_modules/.bin/protoc-gen-ts"
+  PROTO_NAME="$2"
+  OUT_DIR="/app/myapp/types/pb/${PROTO_NAME}"
+
+  mkdir -p "${OUT_DIR}"
+
+  $NODE_PROTOC \
+    --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
+    --ts_out="service=grpc-node,mode=grpc-js:${OUT_DIR}" \
+    --grpc_out="grpc_js:${OUT_DIR}" \
+    "${PROTO_NAME}.proto"
+}
+
+function search_filename() {
+  local cwd="$1"
+  files=()
+  noex_files=()
+
+  while IFS= read -r -d '' file; do
+    files+=("${file##*/}")
+  done < <(find "$cwd" -type f -print0)
+
+  for file in "${files[@]}"; do
+    noex_files+=("${file%.*}")
+  done
+
+  echo "${noex_files[@]}"
+}
+
+function main() {
+  npm install -g grpc-tools
+  local cwd
+  cwd="$(cd "$(dirname "$0")/../types/proto" && pwd)"
+  r=$(search_filename "${cwd}")
+  result=($r)
+  for i in "${result[@]}"; do
+    echo "generating ${i}"
+    ts-gen-service "${cwd}" "${i}"
+  done
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi

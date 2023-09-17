@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function all_apply() {
+  local cwd="$1"
+  cd "${cwd}"
+  cd infra/eksctl
+  eksctl delete cluster -f cluster.yaml
+}
+
+function main() {
+  local cwd
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
+  all_apply "${cwd}"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
