@@ -113,5 +113,6 @@ apserver/docker_secret.env
 webserver/docker_secret.env
 memo.txt
 s3/*
+bin/infra_create/conf/*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,nextjs,react,go
