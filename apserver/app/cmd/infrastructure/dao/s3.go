@@ -22,7 +22,7 @@ func InitS3() (*s3.S3, error) {
 	secret_key := os.Getenv("S3_SECRET_KEY")
 	cfg := aws.Config{
 		Credentials:      credentials.NewStaticCredentials(acess_key, secret_key, ""),
-		Region:           aws.String(os.Getenv("S3_SECRET_KEY")),
+		Region:           aws.String(os.Getenv("S3_REGION")),
 		Endpoint:         aws.String(os.Getenv("S3_ENDPOINT")),
 		S3ForcePathStyle: aws.Bool(true),
 	}

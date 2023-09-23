@@ -5,8 +5,8 @@ resource "aws_db_instance" "db-setting" {
   identifier = "rust-mysql"
 
   db_name  = "todoproject"
-  username = "rustrust"
-  password = "rustrust"
+  username = "goMySql1"
+  password = "goMySql1"
 
   instance_class = "db.t2.micro"
 

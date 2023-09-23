@@ -9,26 +9,24 @@ spec:
     - image: 280233053143.dkr.ecr.ap-northeast-1.amazonaws.com/apserver:latest
       name: apserver
       env:
-        - name: HOST
-          value: "rust-mysql.cy7vxeh7sdlz.ap-northeast-1.rds.amazonaws.com"
-        - name: DBNAME
-          value: "todoproject"
-        - name: USERNAME
-          value: "rustrust"
-        - name: PASSWORD
-          value: "rustrust"
+        - name: ADMIN_EMAIL
+          value: "kanri@gmail.jp"
+        - name: S3_REGION
+          value: "ap-northeast-1"
+        - name: S3_PATH_IMG
+          value: "image"
+        - name: S3_PATH_MOVIE
+          value: "movie"
       livenessProbe:
-        httpGet:
-          path: /
-          port: 8080
+        exec:
+          command: ["/grpc_health_probe", "-addr=:8080"]
         initialDelaySeconds: 5
         timeoutSeconds: 1
         periodSeconds: 10
         failureThreshold: 3
       readinessProbe:
-        httpGet:
-          path: /
-          port: 8080
+        exec:
+          command: ["/grpc_health_probe", "-addr=:8080"]
         initialDelaySeconds: 5
         timeoutSeconds: 1
         periodSeconds: 10

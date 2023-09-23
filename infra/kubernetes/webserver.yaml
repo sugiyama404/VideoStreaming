@@ -9,14 +9,8 @@ spec:
     - image: 280233053143.dkr.ecr.ap-northeast-1.amazonaws.com/webserver:latest
       name: webserver
       env:
-        - name: HOST
-          value: "rust-mysql.cy7vxeh7sdlz.ap-northeast-1.rds.amazonaws.com"
-        - name: DBNAME
-          value: "todoproject"
-        - name: USERNAME
-          value: "rustrust"
-        - name: PASSWORD
-          value: "rustrust"
+        - name: APSERVER_ADDRESS
+          value: apserver.apserver:8080
       livenessProbe:
         httpGet:
           path: /
