@@ -21,3 +21,14 @@ http://localhost/administrator
 
 3. Enjoy watching the video!
 
+## Start for EKS
+
+1. Please execute the bashscript in the following order.
+
+```
+bin/infra_create/terraform_apply
+bin/infra_create/eksctl_create
+bin/infra_create/configmap_creater/start_first_docker
+bin/infra_create/k8s_conf_create
+bin/infra_create/k8s_all_apply
+```
