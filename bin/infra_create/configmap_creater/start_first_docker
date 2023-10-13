@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function env_file_exists() {
+  local directory="$1"
+  local env_file="$2"
+  if [ -f "${directory}/${env_file}" ]; then
+    rm "$directory/${env_file}"
+    echo "${directory}/${env_file} file has been deleted."
+  else
+    echo "No ${directory}/${env_file} file was found."
+  fi
+}
+
+function standard_input() {
+  local base_dir="$1"
+  local filename="$2"
+  local var_name="$3"
+  read -r -p "Enter the value of the variable ${var_name}: " input
+  while [[ -z $input ]]; do
+    read -r -p "Input is empty. Enter the value of the variable ${var_name}: " input
+  done
+  echo "${var_name}=${input}" >>"${base_dir}/${filename}"
+}
+
+function apserver_conf() {
+  local cwd="$1"
+  local conf_file="${cwd}/bin/infra_create/conf/apserver-conf.txt"
+  local array1=("S3_ACCESS_KEY" "S3_SECRET_KEY" "HOST" "S3_ENDPOINT" "S3_BUCKET")
+  env_file_exists "${cwd}" "${conf_file}"
+  for i in "${!array1[@]}"; do
+    standard_input "${cwd}" "${conf_file}" "${array1[$i]}"
+  done
+}
+
+function webserver_conf() {
+  local cwd="$1"
+  local conf_file="${cwd}/bin/infra_create/conf/webserver-conf.txt"
+  env_file_exists "${cwd}" "${conf_file}"
+
+  local secret_key
+  secret_key=$(openssl rand -base64 32)
+  echo "NEXTAUTH_SECRET=${secret_key}" >>"${cwd}/${conf_file}"
+
+  standard_input "${cwd}" "${conf_file}" "NEXTAUTH_URL"
+}
+
+function main() {
+  local cwd
+  cwd="$(cd "$(dirname "$0")/../../.." && pwd)"
+  apserver_conf "${cwd}"
+  webserver_conf "${cwd}"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi

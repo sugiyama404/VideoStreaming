@@ -23,7 +23,6 @@ message VideoUploadReplay {
     string newname = 1;
 }
 
-
 message VideoDeteilUpoadRequest {
     string video_uuid = 1;
     string title = 2;

@@ -22,7 +22,7 @@ RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 # build phase
-FROM golang:1.19-buster as build
+FROM golang:1.19-buster as builder
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -37,11 +37,17 @@ COPY ./app .
 
 RUN go build -o main ./cmd/...
 
+# Adding the grpc_health_probe
+RUN GRPC_HEALTH_PROBE_VERSION=v0.3.2 && \
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
+
 # deploy phase
 FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /
 
-COPY --from=build /app/main /main
+COPY --from=builder /app/main /main
+COPY --from=builder /bin/grpc_health_probe /grpc_health_probe
 USER nonroot
 EXPOSE 8080
 

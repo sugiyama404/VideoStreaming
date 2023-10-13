@@ -10,7 +10,7 @@ function docker_grpc_compile() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
   docker_grpc_compile "${cwd}"
 
 }

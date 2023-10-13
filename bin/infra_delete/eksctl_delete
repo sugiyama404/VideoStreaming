@@ -2,17 +2,17 @@
 
 set -euo pipefail
 
-function docker_node_runner_dev() {
+function all_apply() {
   local cwd="$1"
   cd "${cwd}"
-  docker compose exec webserver sh -c "npm run dev"
+  cd infra/eksctl
+  eksctl delete cluster -f cluster.yaml
 }
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
-  docker_node_runner_dev "${cwd}"
-
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
+  all_apply "${cwd}"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

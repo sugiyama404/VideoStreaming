@@ -83,7 +83,7 @@ function make_envfile() {
 
 function main() {
   local cwd
-  cwd="$(cd "$(dirname "$0")/.." && pwd)"
+  cwd="$(cd "$(dirname "$0")/../.." && pwd)"
 
   local array1=("S3_ACCESS_KEY" "S3_SECRET_KEY" "ADMIN_EMAI")
   for i in "${!array1[@]}"; do
